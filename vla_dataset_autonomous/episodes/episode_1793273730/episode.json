@@ -1,0 +1,48 @@
+{
+  "episode_id": "episode_1793273730",
+  "task_id": "place_blue_ball_in_cup",
+  "instruction": "Put the blue ball in the cup.",
+  "target_object": "blue_ball",
+  "target_receptacle": "placement_cup",
+  "object_positions": {
+    "red_ball": [
+      0.2862,
+      0.1124,
+      0.025
+    ],
+    "green_ball": [
+      0.2801,
+      -0.077,
+      0.025
+    ],
+    "blue_ball": [
+      0.194,
+      -0.1886,
+      0.025
+    ],
+    "orange_cube": [
+      0.304,
+      0.0181,
+      0.025
+    ],
+    "purple_cube": [
+      0.1648,
+      -0.0873,
+      0.025
+    ]
+  },
+  "schema_version": 1,
+  "controller": "damped_least_squares_ik",
+  "grasp_mode": "assist",
+  "action_representation": "absolute_joint_target_rad",
+  "camera_video_fps": 10.0,
+  "started_at_unix": 1793273730.8198173,
+  "frame_count": 92,
+  "success": false,
+  "finished_at_unix": 1793273741.1811287,
+  "final_target_position": [
+    0.194,
+    -0.1886,
+    0.019369828523342816
+  ]
+}

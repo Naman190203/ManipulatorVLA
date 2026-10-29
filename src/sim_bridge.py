@@ -1,7 +1,7 @@
 """Local MuJoCo feedback and position-command bridge.
 
-Run from the project directory with:
-    python sim_bridge.py
+Run from the project root with:
+    python src/sim_bridge.py
 
 The simulator owns all MuJoCo state. WebSocket clients only receive snapshots
 or submit bounded position targets.
@@ -30,8 +30,9 @@ from PIL import Image
 import uvicorn
 
 
-HERE = Path(__file__).resolve().parent
-DEFAULT_SCENE = HERE / "scene_with_balls_cameras.xml"
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+ASSETS_DIR = PROJECT_ROOT / "assets"
+DEFAULT_SCENE = ASSETS_DIR / "scene_with_balls_cameras.xml"
 JOINT_ORDER = (
     "joint_1",
     "joint_2",
@@ -48,7 +49,14 @@ ACTUATOR_ORDER = (
     "joint5_position",
     "gripper_open_close",
 )
-CAMERA_NAMES = ("agentview", "gripperview")
+CAMERA_NAMES = ("agentview", "topview")
+MOVABLE_OBJECT_JOINTS = {
+    "red_ball": "red_ball_free",
+    "green_ball": "green_ball_free",
+    "blue_ball": "blue_ball_free",
+    "orange_cube": "orange_cube_free",
+    "purple_cube": "purple_cube_free",
+}
 MAX_TARGET_SPEED_RAD_S = (0.75, 0.75, 0.75, 0.75, 0.75, 1.0)
 SIM_BATCH_STEPS = 5
 COMMAND_TIMEOUT_S = 12.0
@@ -104,6 +112,19 @@ class SimulationBridge:
 
         self.qpos_addresses = [int(self.model.jnt_qposadr[jid]) for jid in self.joint_ids]
         self.dof_addresses = [int(self.model.jnt_dofadr[jid]) for jid in self.joint_ids]
+        object_joint_ids = {
+            object_name: mujoco.mj_name2id(
+                self.model, mujoco.mjtObj.mjOBJ_JOINT, joint_name
+            )
+            for object_name, joint_name in MOVABLE_OBJECT_JOINTS.items()
+        }
+        if any(joint_id < 0 for joint_id in object_joint_ids.values()):
+            self.renderer.close()
+            raise ValueError("Scene is missing one or more movable object joints.")
+        self.object_qpos_addresses = {
+            object_name: int(self.model.jnt_qposadr[joint_id])
+            for object_name, joint_id in object_joint_ids.items()
+        }
         self.limits = []
         for joint_id, actuator_id in zip(self.joint_ids, self.actuator_ids):
             low, high = (
@@ -123,6 +144,8 @@ class SimulationBridge:
             self.limits.append((low, high))
 
         mujoco.mj_forward(self.model, self.data)
+        self.initial_qpos = self.data.qpos.copy()
+        self.initial_qvel = self.data.qvel.copy()
         self.current_targets = [
             float(self.data.qpos[address]) for address in self.qpos_addresses
         ]
@@ -223,6 +246,50 @@ class SimulationBridge:
             values.append(value)
         return seq, values
 
+    def validate_reset(self, message: Any) -> tuple[int, dict[str, list[float]]]:
+        """Validate a dataset episode reset without exposing arbitrary state edits."""
+        if not isinstance(message, dict) or message.get("type") != "reset":
+            raise ValueError("Expected a JSON reset message with type='reset'.")
+        seq = message.get("seq")
+        if not isinstance(seq, int) or isinstance(seq, bool) or seq < 0:
+            raise ValueError("seq must be a non-negative integer.")
+        placements = message.get("object_positions")
+        if not isinstance(placements, dict):
+            raise ValueError("object_positions must be an object-name to [x, y, z] mapping.")
+        unknown = set(placements) - set(MOVABLE_OBJECT_JOINTS)
+        if unknown:
+            raise ValueError(f"Unknown movable objects: {sorted(unknown)}.")
+        checked: dict[str, list[float]] = {}
+        for name, raw_position in placements.items():
+            if not isinstance(raw_position, list) or len(raw_position) != 3:
+                raise ValueError(f"{name} must have exactly three position values.")
+            try:
+                position = [float(value) for value in raw_position]
+            except (TypeError, ValueError):
+                raise ValueError(f"{name} position values must be numeric.")
+            if not all(math.isfinite(value) for value in position):
+                raise ValueError(f"{name} position values must be finite.")
+            x, y, z = position
+            if not (-0.30 <= x <= 0.35 and -0.25 <= y <= 0.25 and 0.0 <= z <= 0.12):
+                raise ValueError(f"{name} is outside the safe tabletop placement region.")
+            checked[name] = position
+        return seq, checked
+
+    def reset_episode(self, placements: dict[str, list[float]]) -> None:
+        """Restore the robot and movable objects, then apply approved placements."""
+        self.data.qpos[:] = self.initial_qpos
+        self.data.qvel[:] = self.initial_qvel
+        for name, position in placements.items():
+            address = self.object_qpos_addresses[name]
+            self.data.qpos[address:address + 3] = position
+            self.data.qpos[address + 3:address + 7] = (1.0, 0.0, 0.0, 0.0)
+        self.current_targets = [float(self.data.qpos[address]) for address in self.qpos_addresses]
+        for actuator_id, target in zip(self.actuator_ids, self.current_targets):
+            self.data.ctrl[actuator_id] = target
+        self.last_command_at = None
+        self.command_timed_out = False
+        mujoco.mj_forward(self.model, self.data)
+
     async def run(self) -> None:
         timestep = float(self.model.opt.timestep)
         batch_duration = timestep * SIM_BATCH_STEPS
@@ -298,7 +365,7 @@ def create_app(config: BridgeConfig) -> FastAPI:
             bridge.close()
 
     app = FastAPI(title="MuJoCo Simulation Bridge", lifespan=lifespan)
-    dashboard_html = (HERE / "dashboard.html").read_text(encoding="utf-8")
+    dashboard_html = (ASSETS_DIR / "dashboard.html").read_text(encoding="utf-8")
 
     @app.get("/", response_class=HTMLResponse)
     @app.get("/dashboard", response_class=HTMLResponse)
@@ -332,6 +399,7 @@ def create_app(config: BridgeConfig) -> FastAPI:
             "commands_ws": "/ws/commands",
             "joint_order": list(JOINT_ORDER),
             "camera_names": list(CAMERA_NAMES),
+            "movable_objects": list(MOVABLE_OBJECT_JOINTS),
             "limits_rad": {
                 name: list(bounds)
                 for name, bounds in zip(JOINT_ORDER, app.state.bridge.limits)
@@ -351,10 +419,17 @@ def create_app(config: BridgeConfig) -> FastAPI:
             while True:
                 observation = bridge.latest_observation
                 if observation:
-                    await asyncio.wait_for(websocket.send_json(observation), timeout=2.0)
+                    # Do not cancel a partially-sent large image payload. A
+                    # cancellation can leave the WebSocket protocol closed,
+                    # which previously interrupted video collection mid-episode.
+                    await websocket.send_json(observation)
                 await asyncio.sleep(bridge.feedback_interval)
-        except (WebSocketDisconnect, asyncio.TimeoutError, RuntimeError):
-            await websocket.close()
+        except WebSocketDisconnect:
+            return
+        except RuntimeError:
+            # The client may have disappeared between the send and the next
+            # await. There is no useful recovery on this server-side socket.
+            return
 
     @app.websocket("/ws/commands")
     async def commands(websocket: WebSocket):
@@ -366,19 +441,32 @@ def create_app(config: BridgeConfig) -> FastAPI:
             while True:
                 message = await websocket.receive_json()
                 try:
-                    seq, targets = bridge.validate_command(message)
+                    message_type = message.get("type") if isinstance(message, dict) else None
+                    if message_type == "command":
+                        seq, targets = bridge.validate_command(message)
+                    elif message_type == "reset":
+                        seq, placements = bridge.validate_reset(message)
+                    else:
+                        raise ValueError("Expected a command or reset message.")
                     if seq <= last_seq:
                         raise ValueError("seq must increase for each command connection.")
-                    bridge.current_targets = targets
-                    bridge.last_command_at = time.perf_counter()
-                    bridge.command_timed_out = False
+                    if message_type == "command":
+                        bridge.current_targets = targets
+                        bridge.last_command_at = time.perf_counter()
+                        bridge.command_timed_out = False
+                    else:
+                        lock = bridge.viewer.lock() if bridge.viewer is not None else _NullLock()
+                        with lock:
+                            bridge.reset_episode(placements)
+                            bridge.latest_observation = bridge.capture_observation()
                     last_seq = seq
                     await websocket.send_json(
                         {
                             "type": "ack",
                             "seq": seq,
                             "accepted": True,
-                            "target_position_rad": targets,
+                            "operation": message_type,
+                            **({"target_position_rad": targets} if message_type == "command" else {"object_positions": placements}),
                             "joint_order": list(JOINT_ORDER),
                         }
                     )

@@ -1,6 +1,6 @@
 # MuJoCo feedback and command bridge
 
-The bridge runs the simulation locally and exposes timestamped observations and
+Run commands from the project root (`D:\Naman_VLA`). The bridge runs the simulation locally and exposes timestamped observations and
 bounded joint-position targets over two WebSocket endpoints. MuJoCo state is
 owned by the simulation loop; clients cannot edit model state directly.
 
@@ -10,7 +10,7 @@ From PowerShell in this folder:
 
 ```powershell
 python -m pip install -r requirements-bridge.txt
-python sim_bridge.py
+python src/sim_bridge.py
 ```
 
 Open the browser dashboard at [http://127.0.0.1:8765/](http://127.0.0.1:8765/)
@@ -29,8 +29,7 @@ The optional desktop monitor and command panel can also be opened in a second
 PowerShell window:
 
 ```powershell
-cd D:\Naman_VLA
-python bridge_client.py
+python src/bridge_client.py
 ```
 
 It displays both camera streams and measured joint state. The six target fields
@@ -84,6 +83,27 @@ joint speed. The position servos use a 1.3 damping ratio and the implicit-fast
 integrator to reduce overshoot and settle at the requested position.
 Commands must have a strictly increasing `seq` on each connection. If
 commands stop for 12 seconds, the bridge eases to a hold at the measured pose.
+
+## Dataset episode reset
+
+The command socket also accepts a bounded `reset` message for automated VLA
+collection. It restores the initial robot pose and moves only the five named
+free objects inside the safe tabletop region:
+
+```json
+{
+  "type": "reset",
+  "seq": 0,
+  "object_positions": {
+    "red_ball": [0.22, -0.10, 0.02],
+    "green_ball": [0.25, 0.00, 0.02]
+  }
+}
+```
+
+See `docs/VLA_DATASET.md` for task generation and synchronized demonstration
+recording. Reset is intended for local episode setup; it cannot alter robot
+state, cameras, object identity, physics, or arbitrary MuJoCo state.
 
 ## Remote inference
 

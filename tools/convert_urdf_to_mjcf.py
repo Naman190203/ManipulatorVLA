@@ -2,8 +2,9 @@ from pathlib import Path
 import mujoco
 
 # Convert the original URDF to MJCF using the MuJoCo installation on your PC.
-SOURCE = Path(r"D:\Naman_VLA\urdf_configuration.xml")
-OUTPUT = Path(r"D:\Naman_VLA\urdf_configuration_stabilized_mjcf.xml")
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+SOURCE = PROJECT_ROOT / "assets" / "urdf_configuration.xml"
+OUTPUT = PROJECT_ROOT / "assets" / "urdf_configuration_stabilized_mjcf.xml"
 
 if not SOURCE.is_file():
     raise FileNotFoundError(f"Could not find input URDF: {SOURCE}")

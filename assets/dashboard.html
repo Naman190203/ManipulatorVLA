@@ -93,8 +93,8 @@
         <div class="camera-frame"><img id="agentview" alt="Live agent camera"><span class="camera-placeholder" id="agentPlaceholder">Waiting for camera…</span></div>
       </article>
       <article class="panel">
-        <div class="panel-head"><h2>Gripper view</h2><span class="camera-meta" id="gripperMeta">Waiting for frames</span></div>
-        <div class="camera-frame"><img id="gripperview" alt="Live gripper camera"><span class="camera-placeholder" id="gripperPlaceholder">Waiting for camera…</span></div>
+        <div class="panel-head"><h2>Top view</h2><span class="camera-meta" id="topMeta">Waiting for frames</span></div>
+        <div class="camera-frame"><img id="topview" alt="Live top camera"><span class="camera-placeholder" id="topPlaceholder">Waiting for camera…</span></div>
       </article>
     </section>
 
@@ -148,7 +148,7 @@
 
   <script>
     const jointNames = ["joint_1", "joint_2", "joint_3", "joint_4", "joint_5", "left_gear_joint"];
-    const cameraNames = ["agentview", "gripperview"];
+    const cameraNames = ["agentview", "topview"];
     const jointSelect = document.getElementById("jointSelect");
     const statusDot = document.getElementById("statusDot");
     const statusText = document.getElementById("statusText");
@@ -233,8 +233,8 @@
         const img = document.getElementById(name);
         img.src = `data:image/jpeg;base64,${frame.data_base64}`;
         img.style.display = "block";
-        document.getElementById(name === "agentview" ? "agentPlaceholder" : "gripperPlaceholder").style.display = "none";
-        document.getElementById(name === "agentview" ? "agentMeta" : "gripperMeta").textContent = `${frame.width}×${frame.height} · ${observation.seq}`;
+        document.getElementById(name === "agentview" ? "agentPlaceholder" : "topPlaceholder").style.display = "none";
+        document.getElementById(name === "agentview" ? "agentMeta" : "topMeta").textContent = `${frame.width}×${frame.height} · ${observation.seq}`;
       }
       document.getElementById("simTime").textContent = `Simulation time: ${Number(observation.sim_time).toFixed(2)} s · observation ${observation.seq}`;
       updateReadout();

@@ -2,7 +2,6 @@
   <compiler angle="radian"/>
   <option gravity="0 0 -9.81" timestep="0.002" integrator="implicitfast" iterations="100" noslip_iterations="10"/>
   <asset>
-    <mesh name="placement_cup_mesh" file="placement_cup.obj"/>
     <texture name="studio_sky" type="skybox" builtin="gradient" rgb1="0.60 0.66 0.72" rgb2="0.36 0.43 0.50" width="512" height="512"/>
     <material name="mat_base_lower" rgba="0.10 0.13 0.16 1" specular="0.55" shininess="0.4"/>
     <material name="mat_base_middle" rgba="0.14 0.18 0.21 1" specular="0.55" shininess="0.4"/>
@@ -16,17 +15,20 @@
     <material name="mat_finger" rgba="0.67 0.68 0.66 1" specular="0.65" shininess="0.5"/>
     <material name="mat_cube_orange" rgba="1 0.28 0.035 1" specular="0.35" shininess="0.25"/>
     <material name="mat_cube_purple" rgba="0.62 0.12 0.9 1" specular="0.35" shininess="0.25"/>
+    <material name="mat_plate" rgba="0.34 0.58 0.62 1" specular="0.45" shininess="0.35"/>
   </asset>
 
   <statistic center="0.12 0 0.12" extent="0.65"/>
 
   <worldbody>
-    <camera name="agentview" pos="-0.14 -0.36 0.47" xyaxes="0.81 -0.586 0 0.351 0.486 0.802" fovy="60"/>
+    <!-- Right-side raised view aimed across the arm workspace and placement plate. -->
+    <camera name="agentview" pos="0.85 0.45 0.72" xyaxes="-0.609711 0.792624 0 -0.468030 -0.360023 0.807051" fovy="68"/>
+    <camera name="topview" pos="0.12 0.02 1.35" xyaxes="1 0 0 0 1 0" fovy="52"/>
     <light name="key_light" directional="true" pos="0.25 -0.45 1.4" dir="-0.15 0.2 -1" diffuse="0.9 0.9 0.86" specular="0.28 0.28 0.28" castshadow="true"/>
     <light name="fill_light" directional="true" pos="-0.6 0.25 1.1" dir="0.25 -0.15 -1" diffuse="0.5 0.55 0.65" specular="0.12 0.12 0.12" castshadow="false"/>
     <light name="front_light" pos="0.5 -0.3 0.8" dir="-0.3 0.15 -1" diffuse="0.35 0.35 0.35" specular="0.08 0.08 0.08"/>
     <!-- Work surface top is z=0; the existing base rests directly on it. -->
-    <geom name="table" type="box" pos="0 0 -0.035" size="0.45 0.35 0.035" rgba="0.72 0.72 0.69 1" contype="1" conaffinity="3" condim="4" friction="1 0.005 0.0001" solref="0.01 1" solimp="0.95 0.99 0.001"/>
+    <geom name="table" type="box" pos="0 0 -0.035" size="0.45 0.35 0.035" rgba="0.34 0.22 0.14 1" contype="1" conaffinity="3" condim="4" friction="1 0.005 0.0001" solref="0.01 1" solimp="0.95 0.99 0.001"/>
     <geom name="floor" type="plane" pos="0 0 -0.075" size="2 2 0.1" rgba="0.45 0.51 0.57 1" contype="1" conaffinity="3" condim="4" friction="1 0.005 0.0001"/>
     <!-- Fixed bearing pedestal under the rotating robot base. -->
     <!-- The imported fixed world transform is a 90-degree X rotation. This
@@ -97,8 +99,12 @@
                   <geom name="gripper_screw_left_b" type="cylinder" pos="0.034 0.029 0.018" quat="0.707107 0 0.707107 0" size="0.003 0.002" material="mat_motor_cap" contype="0" conaffinity="0"/>
                   <geom name="gripper_screw_right_a" type="cylinder" pos="0.034 -0.029 0.042" quat="0.707107 0 0.707107 0" size="0.003 0.002" material="mat_motor_cap" contype="0" conaffinity="0"/>
                   <geom name="gripper_screw_right_b" type="cylinder" pos="0.034 -0.029 0.018" quat="0.707107 0 0.707107 0" size="0.003 0.002" material="mat_motor_cap" contype="0" conaffinity="0"/>
-                  <!-- Aim down along the fingers toward the work surface and grasp area. -->
-                  <camera name="gripperview" pos="0.035 0 0.045" quat="0.183013 -0.683013 -0.683013 0.183013" fovy="95"/>
+                  <!-- Eye-in-hand view: sit behind the palm and look forward
+                       along the finger axis. Fingers frame the lower sides of
+                       the image while the grasp target remains in front. -->
+                  <!-- Midpoint of the two fingertips: used by the automatic
+                       IK collector as the grasp and placement reference. -->
+                  <site name="grasp_site" pos="0.070 0 0.008" size="0.004" rgba="0 1 0 0"/>
                   <body name="left_finger" pos="0.028 0.035 0.020" gravcomp="1">
                     <inertial pos="0.025 0 0.008" mass="0.05" diaginertia="1e-05 1e-05 1e-05"/>
                     <joint name="left_gear_joint" limited="true" range="-0.5 0" solreflimit="0.001 1" solimplimit="0.99 0.999 0.001" actuatorfrcrange="-50 50" damping="0.1" frictionloss="0.1"/>
@@ -139,31 +145,33 @@
       <geom name="blue_ball_geom" size="0.02" rgba="0.05 0.25 1 1" mass="0.08" contype="1" conaffinity="3" condim="4" friction="1.5 0.005 0.0001" solref="0.004 1" solimp="0.95 0.99 0.001"/>
     </body>
     <!-- 36 mm cubes: sized for a stable pinch grasp with the existing gripper. -->
-    <body name="orange_cube" pos="0.34 -0.22 0.018">
+    <body name="orange_cube" pos="0.18 -0.15 0.018">
       <joint name="orange_cube_free" type="free" damping="0.05"/>
       <geom name="orange_cube_geom" type="box" size="0.018 0.018 0.018" material="mat_cube_orange" mass="0.08" contype="1" conaffinity="3" condim="4" friction="1.5 0.005 0.0001" solref="0.004 1" solimp="0.95 0.99 0.001"/>
     </body>
-    <body name="purple_cube" pos="0.34 0.22 0.018">
+    <body name="purple_cube" pos="0.18 0.15 0.018">
       <joint name="purple_cube_free" type="free" damping="0.05"/>
       <geom name="purple_cube_geom" type="box" size="0.018 0.018 0.018" material="mat_cube_purple" mass="0.08" contype="1" conaffinity="3" condim="4" friction="1.5 0.005 0.0001" solref="0.004 1" solimp="0.95 0.99 0.001"/>
     </body>
-    <!-- One continuous transparent cup shell. Its hidden contact geoms provide
-         the open cavity; the clear inner radius is 36 mm for 40 mm balls. -->
-    <body name="placement_cup" pos="0.12 0.20 0">
-      <geom name="cup_visual" type="mesh" mesh="placement_cup_mesh" contype="0" conaffinity="0" rgba="0.72 0.9 1 0.28" group="2"/>
-      <geom name="cup_bottom_contact" type="cylinder" pos="0 0 0.003" size="0.039 0.003" contype="1" conaffinity="1" condim="4" friction="1.2 0.005 0.0001" rgba="0 0 0 0"/>
-      <geom name="cup_wall_00" type="box" pos="0.039 0 0.033" quat="0.707107 0 0 0.707107" size="0.0108 0.003 0.032" contype="1" conaffinity="1" condim="4" friction="1.2 0.005 0.0001" rgba="0 0 0 0"/>
-      <geom name="cup_wall_01" type="box" pos="0.033775 0.0195 0.033" quat="0.5 0 0 0.866025" size="0.0108 0.003 0.032" contype="1" conaffinity="1" condim="4" friction="1.2 0.005 0.0001" rgba="0 0 0 0"/>
-      <geom name="cup_wall_02" type="box" pos="0.0195 0.033775 0.033" quat="0.258819 0 0 0.965926" size="0.0108 0.003 0.032" contype="1" conaffinity="1" condim="4" friction="1.2 0.005 0.0001" rgba="0 0 0 0"/>
-      <geom name="cup_wall_03" type="box" pos="0 0.039 0.033" quat="0 0 0 1" size="0.0108 0.003 0.032" contype="1" conaffinity="1" condim="4" friction="1.2 0.005 0.0001" rgba="0 0 0 0"/>
-      <geom name="cup_wall_04" type="box" pos="-0.0195 0.033775 0.033" quat="0.965926 0 0 -0.258819" size="0.0108 0.003 0.032" contype="1" conaffinity="1" condim="4" friction="1.2 0.005 0.0001" rgba="0 0 0 0"/>
-      <geom name="cup_wall_05" type="box" pos="-0.033775 0.0195 0.033" quat="0.866025 0 0 -0.5" size="0.0108 0.003 0.032" contype="1" conaffinity="1" condim="4" friction="1.2 0.005 0.0001" rgba="0 0 0 0"/>
-      <geom name="cup_wall_06" type="box" pos="-0.039 0 0.033" quat="0.707107 0 0 -0.707107" size="0.0108 0.003 0.032" contype="1" conaffinity="1" condim="4" friction="1.2 0.005 0.0001" rgba="0 0 0 0"/>
-      <geom name="cup_wall_07" type="box" pos="-0.033775 -0.0195 0.033" quat="0.5 0 0 -0.866025" size="0.0108 0.003 0.032" contype="1" conaffinity="1" condim="4" friction="1.2 0.005 0.0001" rgba="0 0 0 0"/>
-      <geom name="cup_wall_08" type="box" pos="-0.0195 -0.033775 0.033" quat="0.258819 0 0 -0.965926" size="0.0108 0.003 0.032" contype="1" conaffinity="1" condim="4" friction="1.2 0.005 0.0001" rgba="0 0 0 0"/>
-      <geom name="cup_wall_09" type="box" pos="0 -0.039 0.033" quat="0 0 0 -1" size="0.0108 0.003 0.032" contype="1" conaffinity="1" condim="4" friction="1.2 0.005 0.0001" rgba="0 0 0 0"/>
-      <geom name="cup_wall_10" type="box" pos="0.0195 -0.033775 0.033" quat="0.965926 0 0 0.258819" size="0.0108 0.003 0.032" contype="1" conaffinity="1" condim="4" friction="1.2 0.005 0.0001" rgba="0 0 0 0"/>
-      <geom name="cup_wall_11" type="box" pos="0.033775 -0.0195 0.033" quat="0.866025 0 0 0.5" size="0.0108 0.003 0.032" contype="1" conaffinity="1" condim="4" friction="1.2 0.005 0.0001" rgba="0 0 0 0"/>
+    <!-- Broad shallow placement plate with a low segmented retaining rim. -->
+    <body name="placement_plate" pos="0.22 -0.26 0">
+      <geom name="plate_surface" type="cylinder" pos="0 0 0.007" size="0.080 0.007" material="mat_plate" contype="1" conaffinity="3" condim="4" friction="1.2 0.01 0.001" solref="0.01 1" solimp="0.95 0.99 0.001"/>
+      <geom name="plate_rim_00" type="box" pos="0.074 0 0.019" quat="1 0 0 0" size="0.006 0.015 0.005" material="mat_plate" contype="1" conaffinity="3" condim="4" friction="1.2 0.01 0.001"/>
+      <geom name="plate_rim_01" type="box" pos="0.06839 0.02833 0.019" quat="0.980785 0 0 0.195090" size="0.006 0.015 0.005" material="mat_plate" contype="1" conaffinity="3" condim="4" friction="1.2 0.01 0.001"/>
+      <geom name="plate_rim_02" type="box" pos="0.05233 0.05233 0.019" quat="0.923880 0 0 0.382683" size="0.006 0.015 0.005" material="mat_plate" contype="1" conaffinity="3" condim="4" friction="1.2 0.01 0.001"/>
+      <geom name="plate_rim_03" type="box" pos="0.02833 0.06839 0.019" quat="0.831470 0 0 0.555570" size="0.006 0.015 0.005" material="mat_plate" contype="1" conaffinity="3" condim="4" friction="1.2 0.01 0.001"/>
+      <geom name="plate_rim_04" type="box" pos="0 0.074 0.019" quat="0.707107 0 0 0.707107" size="0.006 0.015 0.005" material="mat_plate" contype="1" conaffinity="3" condim="4" friction="1.2 0.01 0.001"/>
+      <geom name="plate_rim_05" type="box" pos="-0.02833 0.06839 0.019" quat="0.555570 0 0 0.831470" size="0.006 0.015 0.005" material="mat_plate" contype="1" conaffinity="3" condim="4" friction="1.2 0.01 0.001"/>
+      <geom name="plate_rim_06" type="box" pos="-0.05233 0.05233 0.019" quat="0.382683 0 0 0.923880" size="0.006 0.015 0.005" material="mat_plate" contype="1" conaffinity="3" condim="4" friction="1.2 0.01 0.001"/>
+      <geom name="plate_rim_07" type="box" pos="-0.06839 0.02833 0.019" quat="0.195090 0 0 0.980785" size="0.006 0.015 0.005" material="mat_plate" contype="1" conaffinity="3" condim="4" friction="1.2 0.01 0.001"/>
+      <geom name="plate_rim_08" type="box" pos="-0.074 0 0.019" quat="0 0 0 1" size="0.006 0.015 0.005" material="mat_plate" contype="1" conaffinity="3" condim="4" friction="1.2 0.01 0.001"/>
+      <geom name="plate_rim_09" type="box" pos="-0.06839 -0.02833 0.019" quat="-0.195090 0 0 0.980785" size="0.006 0.015 0.005" material="mat_plate" contype="1" conaffinity="3" condim="4" friction="1.2 0.01 0.001"/>
+      <geom name="plate_rim_10" type="box" pos="-0.05233 -0.05233 0.019" quat="-0.382683 0 0 0.923880" size="0.006 0.015 0.005" material="mat_plate" contype="1" conaffinity="3" condim="4" friction="1.2 0.01 0.001"/>
+      <geom name="plate_rim_11" type="box" pos="-0.02833 -0.06839 0.019" quat="-0.555570 0 0 0.831470" size="0.006 0.015 0.005" material="mat_plate" contype="1" conaffinity="3" condim="4" friction="1.2 0.01 0.001"/>
+      <geom name="plate_rim_12" type="box" pos="0 -0.074 0.019" quat="-0.707107 0 0 0.707107" size="0.006 0.015 0.005" material="mat_plate" contype="1" conaffinity="3" condim="4" friction="1.2 0.01 0.001"/>
+      <geom name="plate_rim_13" type="box" pos="0.02833 -0.06839 0.019" quat="-0.831470 0 0 0.555570" size="0.006 0.015 0.005" material="mat_plate" contype="1" conaffinity="3" condim="4" friction="1.2 0.01 0.001"/>
+      <geom name="plate_rim_14" type="box" pos="0.05233 -0.05233 0.019" quat="-0.923880 0 0 0.382683" size="0.006 0.015 0.005" material="mat_plate" contype="1" conaffinity="3" condim="4" friction="1.2 0.01 0.001"/>
+      <geom name="plate_rim_15" type="box" pos="0.06839 -0.02833 0.019" quat="-0.980785 0 0 0.195090" size="0.006 0.015 0.005" material="mat_plate" contype="1" conaffinity="3" condim="4" friction="1.2 0.01 0.001"/>
     </body>
   </worldbody>
 

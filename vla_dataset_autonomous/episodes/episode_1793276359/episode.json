@@ -1,0 +1,48 @@
+{
+  "episode_id": "episode_1793276359",
+  "task_id": "place_blue_ball_on_plate",
+  "instruction": "Put the blue ball on the plate.",
+  "target_object": "blue_ball",
+  "target_receptacle": "placement_plate",
+  "object_positions": {
+    "red_ball": [
+      0.22,
+      -0.1,
+      0.02
+    ],
+    "green_ball": [
+      0.25,
+      0.0,
+      0.02
+    ],
+    "blue_ball": [
+      0.22,
+      0.1,
+      0.02
+    ],
+    "orange_cube": [
+      0.18,
+      -0.15,
+      0.018
+    ],
+    "purple_cube": [
+      0.18,
+      0.15,
+      0.018
+    ]
+  },
+  "schema_version": 1,
+  "controller": "damped_least_squares_ik",
+  "grasp_mode": "assist",
+  "action_representation": "absolute_joint_target_rad",
+  "camera_video_fps": 10.0,
+  "started_at_unix": 1793276359.8792298,
+  "frame_count": 138,
+  "success": true,
+  "finished_at_unix": 1793276372.7486672,
+  "final_target_position": [
+    0.22,
+    -0.26,
+    0.0339368273541335
+  ]
+}

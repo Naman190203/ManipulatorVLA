@@ -1,17 +1,18 @@
 """
 Rebuild the MuJoCo scene while keeping the robot upright and supported against gravity.
 
-Place this beside urdf_configuration.xml and run:
-    py add_scene_objects.py
+Run from the project root:
+    py tools/add_scene_objects.py
 
 This does not modify the original URDF.
 """
 from pathlib import Path
 import mujoco
 
-HERE = Path(__file__).resolve().parent
-ROBOT_FILE = HERE / "urdf_configuration.xml"
-OUTPUT_FILE = HERE / "scene_with_balls_cameras.xml"
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+ASSETS_DIR = PROJECT_ROOT / "assets"
+ROBOT_FILE = ASSETS_DIR / "urdf_configuration.xml"
+OUTPUT_FILE = ASSETS_DIR / "scene_with_balls_cameras.xml"
 
 BALL_POSITIONS = {
     "red_ball":   (0.22, -0.10, 0.045),
@@ -21,11 +22,20 @@ BALL_POSITIONS = {
 BALL_RADIUS = 0.025
 BALL_MASS = 0.08
 
-AGENT_CAMERA_POS = (-0.35, -0.65, 0.75)
-AGENT_CAMERA_XYAXES = (0.81, -0.586, 0, 0.351, 0.486, 0.802)
+# Raised right-side view aimed across the arm workspace and placement plate.
+AGENT_CAMERA_POS = (0.85, 0.45, 0.72)
+AGENT_CAMERA_XYAXES = (
+    -0.609711, 0.792624, 0.0,  # screen-right
+    -0.468030, -0.360023, 0.807051,  # screen-up
+)
+AGENT_CAMERA_FOVY = 68
 
-GRIPPER_CAMERA_POS = (0.035, 0.0, 0.045)
-GRIPPER_CAMERA_XYAXES = (0, 0, 1, 0, 1, 0)
+# The eye-in-hand view is behind the palm, facing forward along the local
+# finger axis (+X).  This gives the LIBERO wrist-view perspective while keeping
+# both fingers at the bottom and sides of the image for grasp feedback.
+GRIPPER_CAMERA_POS = (-0.065, 0.0, 0.040)
+GRIPPER_CAMERA_XYAXES = (0.0, 1.0, 0.0, 0.0, 0.0, -1.0)
+GRIPPER_CAMERA_FOVY = 80
 
 
 def main():
@@ -81,7 +91,7 @@ def main():
         name="agentview",
         pos=AGENT_CAMERA_POS,
         xyaxes=AGENT_CAMERA_XYAXES,
-        fovy=60,
+        fovy=AGENT_CAMERA_FOVY,
     )
 
     gripper_body = spec.body("gripper_base")
@@ -91,7 +101,7 @@ def main():
         name="gripperview",
         pos=GRIPPER_CAMERA_POS,
         xyaxes=GRIPPER_CAMERA_XYAXES,
-        fovy=65,
+        fovy=GRIPPER_CAMERA_FOVY,
     )
 
     OUTPUT_FILE.write_text(spec.to_xml(), encoding="utf-8")

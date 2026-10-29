@@ -1,7 +1,7 @@
 """Desktop monitor and command client for sim_bridge.py.
 
 Run from PowerShell:
-    python bridge_client.py
+    python src/bridge_client.py
 
 For a tunneled bridge, pass its HTTPS base URL and set
 MUJOCO_BRIDGE_TOKEN in the environment before starting the client.
