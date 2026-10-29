@@ -1,0 +1,96 @@
+<?xml version="1.0"?>
+<robot name="custom_5dof_manipulator">
+
+  <!-- ================= MATERIALS (Distinct Colors) ================= -->
+  <material name="red">
+    <color rgba="0.8 0.1 0.1 1.0"/>
+  </material>
+  <material name="green">
+    <color rgba="0.1 0.8 0.1 1.0"/>
+  </material>
+  <material name="blue">
+    <color rgba="0.1 0.1 0.8 1.0"/>
+  </material>
+  <material name="yellow">
+    <color rgba="0.9 0.9 0.1 1.0"/>
+  </material>
+  <material name="orange">
+    <color rgba="0.9 0.5 0.1 1.0"/>
+  </material>
+  <material name="silver">
+    <color rgba="0.7 0.7 0.7 1.0"/>
+  </material>
+  <material name="magenta">
+    <color rgba="0.9 0.1 0.9 1.0"/>
+  </material>
+
+  <!-- ================= WORLD LINK ================= -->
+  <link name="world"/>
+
+  <!-- ================= BASE LINK (Flat on Ground Plane) ================= -->
+  <link name="base_link">
+    <visual>
+      <origin xyz="0 0 0.02" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.2 0.2 0.04"/>
+      </geometry>
+      <material name="silver"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0.02" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.2 0.2 0.04"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="1.0"/>
+      <origin xyz="0 0 0.02"/>
+      <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.002"/>
+    </inertial>
+  </link>
+
+  <joint name="world_fixed" type="fixed">
+    <parent link="world"/>
+    <child link="base_link"/>
+    <origin xyz="0 0 0" rpy="1.5708 0 0"/>
+  </joint>
+
+  <!-- ================= LINK 1 ================= -->
+  <link name="link_1">
+    <visual>
+      <origin xyz="0 0 0.0215" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.06 0.06 0.043"/>
+      </geometry>
+      <material name="red"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0.0215" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.06 0.06 0.043"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="0.3"/>
+      <inertia ixx="0.0001" ixy="0" ixz="0" iyy="0.0001" iyz="0" izz="0.0001"/>
+    </inertial>
+  </link>
+
+  <joint name="joint_1" type="revolute">
+    <parent link="base_link"/>
+    <child link="link_1"/>
+    <origin xyz="0 0 0.04" rpy="0 0 0"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-3.1416" upper="3.1416" effort="10.0" velocity="1.0"/>
+      <dynamics damping="1.0" friction="0.05"/>
+  </joint>
+
+  <!-- ================= LINK 2 ================= -->
+  <link name="link_2">
+    <visual>
+      <origin xyz="0.03 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.06 0.04 0.04"/>
+      </geometry>
+      <material name="green"/>
+    </visual>

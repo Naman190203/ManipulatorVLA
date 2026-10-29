@@ -1,0 +1,7 @@
+
+1st is 0-360*
+2nd is  180* but it is from horizontal to opposite horizontal this is so that it remains above the table, your one is vertical to vertical whihc is making it go under the table for the lower 90*
+3rd is 115.16 where its 0 alligns with the link before it
+4th is 119.7 but in the opposite direction of the link one above it also it has its 0 alligned with the link prior to it
+5 th is 360*
+6th is open and close gripper

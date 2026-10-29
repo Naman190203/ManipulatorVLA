@@ -1,0 +1,314 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Manipulator Control</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #0c1118;
+      color: #e6edf5;
+      --panel: #151d28;
+      --line: #293747;
+      --muted: #96a8bc;
+      --accent: #56b4e9;
+      --green: #58d68d;
+      --red: #ff7777;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; min-width: 320px; }
+    header {
+      display: flex; align-items: center; justify-content: space-between; gap: 16px;
+      padding: 16px 22px; border-bottom: 1px solid var(--line); background: #101720;
+      position: sticky; top: 0; z-index: 2;
+    }
+    h1 { font-size: 18px; margin: 0; letter-spacing: .02em; }
+    .status { display: flex; align-items: center; gap: 9px; color: var(--muted); font-size: 13px; }
+    .dot { width: 9px; height: 9px; border-radius: 50%; background: #78889a; }
+    .dot.connected { background: var(--green); box-shadow: 0 0 10px #58d68d66; }
+    .dot.error { background: var(--red); }
+    main { display: grid; grid-template-columns: minmax(0, 1.65fr) minmax(330px, .85fr); gap: 16px; padding: 16px; max-width: 1800px; margin: 0 auto; }
+    .camera-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; align-content: start; }
+    .panel { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+    .panel-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 12px 14px; border-bottom: 1px solid var(--line); }
+    .panel-head h2 { font-size: 14px; margin: 0; font-weight: 600; }
+    .camera-meta { color: var(--muted); font-size: 11px; }
+    .camera-frame { background: #080d13; aspect-ratio: 4 / 3; display: grid; place-items: center; }
+    .camera-frame img { width: 100%; height: 100%; object-fit: contain; }
+    .camera-placeholder { color: #78889a; font-size: 13px; }
+    .controls { padding: 16px; align-self: start; }
+    .controls h2 { margin: 0 0 14px; font-size: 16px; }
+    label { display: block; color: var(--muted); font-size: 12px; margin-bottom: 6px; }
+    select, input[type="password"], input[type="number"] {
+      color: #e6edf5; background: #0f1620; border: 1px solid #34465a; border-radius: 7px;
+      padding: 9px 10px; font: inherit; width: 100%; outline: none;
+    }
+    select:focus, input:focus { border-color: var(--accent); }
+    .row { display: grid; grid-template-columns: 1fr 130px; gap: 12px; margin: 14px 0; }
+    .step-control { display: flex; align-items: center; gap: 7px; }
+    .step-control input { width: 80px; }
+    .step-control span { color: var(--muted); font-size: 12px; }
+    .joint-readout { padding: 12px; border: 1px solid var(--line); border-radius: 8px; background: #101720; margin: 14px 0; }
+    .readout-line { display: flex; justify-content: space-between; gap: 10px; margin: 5px 0; font-size: 13px; }
+    .readout-line span:first-child { color: var(--muted); }
+    .readout-line strong { font-variant-numeric: tabular-nums; font-weight: 600; }
+    .limits { color: var(--muted); font-size: 11px; }
+    .jog-area { display: grid; grid-template-columns: repeat(3, 58px); grid-template-rows: repeat(2, 50px); gap: 7px; justify-content: center; margin: 18px auto 12px; }
+    button { color: #e6edf5; background: #223247; border: 1px solid #38516d; border-radius: 8px; cursor: pointer; font: inherit; transition: background .12s, transform .08s; }
+    button:hover { background: #2b425c; }
+    button:active { transform: translateY(1px); background: #335575; }
+    .arrow { font-size: 20px; }
+    .up { grid-column: 2; grid-row: 1; }
+    .left { grid-column: 1; grid-row: 2; }
+    .down { grid-column: 2; grid-row: 2; }
+    .right { grid-column: 3; grid-row: 2; }
+    .hold { display: block; width: 100%; padding: 10px; background: #29394b; }
+    .hint { color: var(--muted); font-size: 12px; line-height: 1.5; margin: 12px 0 0; }
+    .token-wrap { margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--line); }
+    .token-wrap summary { color: var(--muted); font-size: 12px; cursor: pointer; margin-bottom: 10px; }
+    .footer { color: var(--muted); font-size: 11px; text-align: center; padding: 0 16px 18px; }
+    @media (max-width: 940px) {
+      main { grid-template-columns: 1fr; }
+      .controls { order: -1; }
+    }
+    @media (max-width: 600px) {
+      header { padding: 13px 14px; }
+      main { padding: 10px; gap: 10px; }
+      .camera-grid { grid-template-columns: 1fr; }
+      .row { grid-template-columns: 1fr 120px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Manipulator Control</h1>
+    <div class="status"><span class="dot" id="statusDot"></span><span id="statusText">Connecting…</span></div>
+  </header>
+  <main>
+    <section class="camera-grid" aria-label="Live camera views">
+      <article class="panel">
+        <div class="panel-head"><h2>Agent view</h2><span class="camera-meta" id="agentMeta">Waiting for frames</span></div>
+        <div class="camera-frame"><img id="agentview" alt="Live agent camera"><span class="camera-placeholder" id="agentPlaceholder">Waiting for camera…</span></div>
+      </article>
+      <article class="panel">
+        <div class="panel-head"><h2>Gripper view</h2><span class="camera-meta" id="gripperMeta">Waiting for frames</span></div>
+        <div class="camera-frame"><img id="gripperview" alt="Live gripper camera"><span class="camera-placeholder" id="gripperPlaceholder">Waiting for camera…</span></div>
+      </article>
+    </section>
+
+    <section class="panel controls" aria-label="Joint controls">
+      <h2>Jog a joint</h2>
+      <label for="jointSelect">Selected joint</label>
+      <select id="jointSelect">
+        <option value="0">Joint 1 · base rotation</option>
+        <option value="1">Joint 2 · shoulder</option>
+        <option value="2">Joint 3 · elbow</option>
+        <option value="3">Joint 4 · wrist pitch</option>
+        <option value="4">Joint 5 · wrist rotation</option>
+        <option value="5">Gripper · open / close</option>
+      </select>
+
+      <div class="row">
+        <div>
+          <label for="stepSize">Step per tap or repeat</label>
+          <div class="step-control"><input id="stepSize" type="number" min="0.1" max="10" step="0.1" value="0.25"><span>degrees</span></div>
+        </div>
+        <div>
+          <label for="repeatMs">Hold repeat</label>
+          <div class="step-control"><input id="repeatMs" type="number" min="100" max="1000" step="50" value="180"><span>ms</span></div>
+        </div>
+      </div>
+
+      <div class="joint-readout" aria-live="polite">
+        <div class="readout-line"><span>Measured</span><strong id="measured">—</strong></div>
+        <div class="readout-line"><span>Target</span><strong id="target">—</strong></div>
+        <div class="limits" id="limits">Limits: waiting for simulator…</div>
+      </div>
+
+      <div class="jog-area" aria-label="Jog buttons">
+        <button class="arrow up" data-direction="1" title="Increase (Arrow Up)">↑</button>
+        <button class="arrow left" data-direction="-1" title="Decrease (Arrow Left)">←</button>
+        <button class="arrow down" data-direction="-1" title="Decrease (Arrow Down)">↓</button>
+        <button class="arrow right" data-direction="1" title="Increase (Arrow Right)">→</button>
+      </div>
+      <button class="hold" id="holdButton">Hold current measured pose</button>
+      <p class="hint">Use ↑ or → to increase the selected joint, and ↓ or ← to decrease it. Hold an arrow for repeated small steps. The simulator clamps commands to each joint’s configured limits and moves toward each target gradually.</p>
+
+      <details class="token-wrap">
+        <summary>Connection token (only needed when authentication is enabled)</summary>
+        <label for="tokenInput">Bridge token</label>
+        <input id="tokenInput" type="password" autocomplete="off" placeholder="MUJOCO_BRIDGE_TOKEN">
+        <button id="reconnectButton" class="hold" style="margin-top:8px">Reconnect</button>
+      </details>
+    </section>
+  </main>
+  <div class="footer" id="simTime">Simulation time: —</div>
+
+  <script>
+    const jointNames = ["joint_1", "joint_2", "joint_3", "joint_4", "joint_5", "left_gear_joint"];
+    const cameraNames = ["agentview", "gripperview"];
+    const jointSelect = document.getElementById("jointSelect");
+    const statusDot = document.getElementById("statusDot");
+    const statusText = document.getElementById("statusText");
+    const measuredEl = document.getElementById("measured");
+    const targetEl = document.getElementById("target");
+    const limitsEl = document.getElementById("limits");
+    const tokenInput = document.getElementById("tokenInput");
+    let feedbackSocket = null;
+    let commandSocket = null;
+    let commandSeq = 0;
+    let latest = null;
+    let targetValues = null;
+    let heldDirection = 0;
+    let repeatTimer = null;
+    let reconnectTimer = null;
+    let feedbackAuthenticated = false;
+    let commandsAuthenticated = false;
+
+    function setStatus(message, state = "") {
+      statusText.textContent = message;
+      statusDot.className = "dot" + (state ? ` ${state}` : "");
+    }
+    function wsUrl(path) {
+      const scheme = location.protocol === "https:" ? "wss:" : "ws:";
+      return `${scheme}//${location.host}${path}`;
+    }
+    function connect() {
+      if (reconnectTimer !== null) clearTimeout(reconnectTimer);
+      reconnectTimer = null;
+      closeSockets();
+      setStatus("Connecting…");
+      feedbackAuthenticated = false;
+      commandsAuthenticated = false;
+      const token = tokenInput.value.trim();
+      feedbackSocket = new WebSocket(wsUrl("/ws/feedback"));
+      commandSocket = new WebSocket(wsUrl("/ws/commands"));
+
+      for (const socket of [feedbackSocket, commandSocket]) {
+        socket.addEventListener("open", () => {
+          if (token) socket.send(JSON.stringify({token}));
+        });
+        socket.addEventListener("error", () => setStatus("Connection error", "error"));
+        socket.addEventListener("close", event => {
+          if (event.code === 4401) setStatus("Authentication failed — enter the bridge token", "error");
+          else if (event.code !== 1000) setStatus("Disconnected — retrying…", "error");
+          if (event.code !== 1000 && reconnectTimer === null) reconnectTimer = setTimeout(connect, 1500);
+        });
+      }
+
+      feedbackSocket.addEventListener("message", event => {
+        const message = JSON.parse(event.data);
+        if (message.type === "authenticated") { feedbackAuthenticated = true; updateConnection(); return; }
+        if (message.type !== "observation") return;
+        latest = message;
+        if (!targetValues) targetValues = [...message.state.commanded_position_rad];
+        updateDashboard(message);
+      });
+      commandSocket.addEventListener("message", event => {
+        const message = JSON.parse(event.data);
+        if (message.type === "authenticated") { commandsAuthenticated = true; updateConnection(); return; }
+        if (message.type === "ack" && !message.accepted) setStatus(`Command rejected: ${message.error}`, "error");
+      });
+      updateConnection();
+    }
+    function closeSockets() {
+      for (const socket of [feedbackSocket, commandSocket]) {
+        if (socket && socket.readyState < WebSocket.CLOSING) socket.close(1000);
+      }
+    }
+    function updateConnection() {
+      const fOpen = feedbackSocket && feedbackSocket.readyState === WebSocket.OPEN;
+      const cOpen = commandSocket && commandSocket.readyState === WebSocket.OPEN;
+      const tokenConfigured = Boolean(tokenInput.value.trim());
+      const ready = fOpen && cOpen && (!tokenConfigured || (feedbackAuthenticated && commandsAuthenticated));
+      if (ready) setStatus("Connected", "connected");
+      else if (statusText.textContent !== "Authentication failed — enter the bridge token") setStatus("Connecting…");
+    }
+    function updateDashboard(observation) {
+      for (const name of cameraNames) {
+        const frame = observation.images?.[name];
+        if (!frame?.data_base64) continue;
+        const img = document.getElementById(name);
+        img.src = `data:image/jpeg;base64,${frame.data_base64}`;
+        img.style.display = "block";
+        document.getElementById(name === "agentview" ? "agentPlaceholder" : "gripperPlaceholder").style.display = "none";
+        document.getElementById(name === "agentview" ? "agentMeta" : "gripperMeta").textContent = `${frame.width}×${frame.height} · ${observation.seq}`;
+      }
+      document.getElementById("simTime").textContent = `Simulation time: ${Number(observation.sim_time).toFixed(2)} s · observation ${observation.seq}`;
+      updateReadout();
+      updateConnection();
+    }
+    function selectedIndex() { return Number(jointSelect.value); }
+    function degrees(rad) { return rad * 180 / Math.PI; }
+    function updateReadout() {
+      if (!latest) return;
+      const i = selectedIndex();
+      const measured = latest.state.joint_position_rad[i];
+      const target = targetValues?.[i] ?? latest.state.commanded_position_rad[i];
+      const limits = latest.joint_limits_rad[jointNames[i]];
+      measuredEl.textContent = `${degrees(measured).toFixed(2)}°`;
+      targetEl.textContent = `${degrees(target).toFixed(2)}°`;
+      limitsEl.textContent = `Allowed: ${degrees(limits[0]).toFixed(2)}° to ${degrees(limits[1]).toFixed(2)}°`;
+    }
+    function sendTargets() {
+      if (!targetValues || !commandSocket || commandSocket.readyState !== WebSocket.OPEN) {
+        setStatus("Command connection is not ready", "error"); return;
+      }
+      if (tokenInput.value.trim() && !commandsAuthenticated) return;
+      commandSocket.send(JSON.stringify({type: "command", seq: ++commandSeq, target_position_rad: targetValues}));
+      updateReadout();
+    }
+    function jog(direction) {
+      if (!latest || !targetValues) return;
+      const i = selectedIndex();
+      const limits = latest.joint_limits_rad[jointNames[i]];
+      const stepDeg = Math.min(10, Math.max(0.1, Number(document.getElementById("stepSize").value) || 0.25));
+      const next = targetValues[i] + direction * stepDeg * Math.PI / 180;
+      targetValues[i] = Math.max(limits[0], Math.min(limits[1], next));
+      sendTargets();
+    }
+    function stopRepeat() {
+      heldDirection = 0;
+      if (repeatTimer !== null) clearInterval(repeatTimer);
+      repeatTimer = null;
+    }
+    function startRepeat(direction) {
+      stopRepeat();
+      heldDirection = direction;
+      jog(direction);
+      const ms = Math.min(1000, Math.max(100, Number(document.getElementById("repeatMs").value) || 180));
+      repeatTimer = setInterval(() => jog(heldDirection), ms);
+    }
+    function holdMeasuredPose() {
+      if (!latest) return;
+      targetValues = [...latest.state.joint_position_rad];
+      sendTargets();
+    }
+
+    jointSelect.addEventListener("change", updateReadout);
+    document.querySelectorAll(".jog-area button").forEach(button => {
+      button.addEventListener("pointerdown", event => { event.preventDefault(); startRepeat(Number(button.dataset.direction)); });
+      button.addEventListener("pointerup", stopRepeat);
+      button.addEventListener("pointerleave", stopRepeat);
+      button.addEventListener("pointercancel", stopRepeat);
+    });
+    document.getElementById("holdButton").addEventListener("click", holdMeasuredPose);
+    document.getElementById("reconnectButton").addEventListener("click", connect);
+    document.addEventListener("keydown", event => {
+      if (!["ArrowUp", "ArrowRight", "ArrowDown", "ArrowLeft"].includes(event.key)) return;
+      if (event.target.matches("input, select, textarea, button")) return;
+      event.preventDefault();
+      if (event.repeat) return;
+      startRepeat((event.key === "ArrowUp" || event.key === "ArrowRight") ? 1 : -1);
+    });
+    document.addEventListener("keyup", event => {
+      if (["ArrowUp", "ArrowRight", "ArrowDown", "ArrowLeft"].includes(event.key)) stopRepeat();
+    });
+    window.addEventListener("blur", stopRepeat);
+    window.addEventListener("beforeunload", closeSockets);
+    connect();
+  </script>
+</body>
+</html>
