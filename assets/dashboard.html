@@ -107,7 +107,7 @@
         <option value="2">Joint 3 · elbow</option>
         <option value="3">Joint 4 · wrist pitch</option>
         <option value="4">Joint 5 · wrist rotation</option>
-        <option value="5">Gripper · open / close</option>
+        <option value="5">Gripper motor · revolute open / close</option>
       </select>
 
       <div class="row">
@@ -147,7 +147,7 @@
   <div class="footer" id="simTime">Simulation time: —</div>
 
   <script>
-    const jointNames = ["joint_1", "joint_2", "joint_3", "joint_4", "joint_5", "left_gear_joint"];
+    const jointNames = ["joint_1", "joint_2", "joint_3", "joint_4", "joint_5", "gripper_motor_joint"];
     const cameraNames = ["agentview", "topview"];
     const jointSelect = document.getElementById("jointSelect");
     const statusDot = document.getElementById("statusDot");

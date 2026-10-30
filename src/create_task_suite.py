@@ -27,28 +27,70 @@ OBJECT_Z = {"red_ball": 0.020, "green_ball": 0.020, "blue_ball": 0.020,
 OBJECT_RADIUS = {"red_ball": 0.042, "green_ball": 0.042, "blue_ball": 0.042,
                  "orange_cube": 0.045, "purple_cube": 0.045}
 PLATE_CENTER = (0.22, -0.26)
+# Keep randomized grasp targets in the central, previously successful IK
+# workspace, but spread them in both tabletop axes. The old list changed only
+# x by 2 cm and left y fixed, so episodes looked nearly identical.
+AUTONOMOUS_PICK_POSITIONS = tuple(
+    (x, y)
+    for y in (-0.12, -0.08, -0.04)
+    for x in (0.20, 0.22, 0.24, 0.26, 0.28)
+)
+PLACEMENT_GRID_X = (0.12, 0.18, 0.24, 0.30, 0.36)
+PLACEMENT_GRID_Y = (-0.16, -0.10, -0.04, 0.02, 0.08, 0.14, 0.20, 0.26)
+MIN_OBJECT_SEPARATION = 0.055
+MIN_PLATE_CLEARANCE = 0.115
 
 
-def sample_position(rng: random.Random, accepted: list[tuple[float, float]], radius: float) -> tuple[float, float]:
-    """Sample a tabletop point away from the plate and other objects."""
-    for _ in range(500):
-        x = rng.uniform(0.15, 0.31)
-        y = rng.uniform(-0.20, 0.12)
-        if math.dist((x, y), PLATE_CENTER) < radius + 0.10:
-            continue
-        if all(math.dist((x, y), other) >= radius + 0.045 for other in accepted):
-            accepted.append((x, y))
-            return x, y
-    raise RuntimeError("Could not sample a collision-free object placement.")
+def sample_positions(
+    rng: random.Random,
+    target_object: str,
+    object_names: tuple[str, ...],
+    target_position: tuple[float, float],
+) -> dict[str, tuple[float, float]]:
+    """Vary the pick target across tested poses and randomize distractors."""
+    candidates = [
+        (x + rng.uniform(-0.001, 0.001), y + rng.uniform(-0.001, 0.001))
+        for x in PLACEMENT_GRID_X
+        for y in PLACEMENT_GRID_Y
+        if abs(x - target_position[0]) >= 0.095
+        and math.hypot(x, y) >= 0.18
+    ]
+    rng.shuffle(candidates)
+    distractors = tuple(name for name in object_names if name != target_object)
+    ordered_names = tuple(sorted(distractors, key=lambda name: OBJECT_RADIUS[name], reverse=True))
+    chosen: dict[str, tuple[float, float]] = {target_object: target_position}
+
+    def place(index: int) -> bool:
+        if index == len(ordered_names):
+            return True
+        name = ordered_names[index]
+        for point in candidates:
+            if math.dist(point, PLATE_CENTER) < MIN_PLATE_CLEARANCE:
+                continue
+            if any(math.dist(point, other) < MIN_OBJECT_SEPARATION for other in chosen.values()):
+                continue
+            chosen[name] = point
+            if place(index + 1):
+                return True
+            del chosen[name]
+        return False
+
+    if not place(0):
+        raise RuntimeError("Could not find five collision-free object placements on the tabletop.")
+    return chosen
 
 
 def make_episode(rng: random.Random, index: int) -> dict:
     target_object, instruction = TASKS[index % len(TASKS)]
     ordered_objects = (target_object,) + tuple(name for name in MOVABLE_OBJECTS if name != target_object)
-    accepted: list[tuple[float, float]] = []
+    # Cycle through a broad set of reachable, well-spaced source locations;
+    # adding the task index gives reproducible variation under --seed.
+    position_index = (index // len(TASKS)) % len(AUTONOMOUS_PICK_POSITIONS)
+    target_position = AUTONOMOUS_PICK_POSITIONS[position_index]
+    positions = sample_positions(rng, target_object, ordered_objects, target_position)
     placements = {}
     for name in ordered_objects:
-        x, y = sample_position(rng, accepted, OBJECT_RADIUS[name])
+        x, y = positions[name]
         placements[name] = [round(x, 4), round(y, 4), OBJECT_Z[name]]
     return {
         "episode_id": f"episode_{index:05d}",
@@ -72,11 +114,13 @@ def main() -> None:
 
     rng = random.Random(args.seed)
     suite = {
-        "schema_version": 1,
+        "schema_version": 2,
         "seed": args.seed,
         "scene": "assets/scene_with_balls_cameras.xml",
-        "camera_names": ["agentview", "gripperview"],
+        "camera_names": ["agentview", "topview"],
         "action_representation": "absolute_joint_target_rad",
+        "joint_order": ["joint_1", "joint_2", "joint_3", "joint_4", "joint_5", "gripper_motor_joint"],
+        "gripper_mechanism": "single_revolute_motor_driving_parallel_translating_fingers",
         "episodes": [make_episode(rng, index) for index in range(args.episodes)],
     }
     args.output.write_text(json.dumps(suite, indent=2) + "\n", encoding="utf-8")

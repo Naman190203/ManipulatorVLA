@@ -9,11 +9,14 @@ videos.
 Every successful training sample needs:
 
 - A natural-language instruction and stable task identifier.
-- Synchronized `agentview.mp4` and `gripperview.mp4` RGB videos, plus a frame
+- Synchronized `agentview.mp4` and `topview.mp4` RGB videos, plus a frame
   index that maps every video frame to the exact simulation timestamp.
 - Robot proprioception: measured joint position and velocity.
 - The action actually commanded at that frame. This bridge records absolute
   joint targets and also stores a frame-to-frame delta for model conversion.
+- Six revolute coordinates in the fixed order `joint_1`, `joint_2`, `joint_3`,
+  `joint_4`, `joint_5`, `gripper_motor_joint`. The gripper motor angle closes
+  both linked fingers while they translate in parallel.
 - Initial poses for every movable object, a reproducible random seed, scene
   name, camera names, and joint order.
 - A terminal success label. Failed or interrupted demonstrations should be
@@ -57,4 +60,6 @@ target is occluded, the object is not placed correctly, or the action stream is
 mostly stationary. Keep train/validation/test splits disjoint by randomized
 placement seed. Convert only successful raw episodes into the final trainer
 format (for example LeRobot video + Parquet), preserving the two camera names,
-language, joint order, and action convention.
+language, joint order, and action convention. Record only with the current
+revolute-motor gripper. The exporter requires the new joint order and six-value
+state/action arrays, so former finger-hinge recordings cannot be combined.

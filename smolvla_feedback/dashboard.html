@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>SmolVLA · Simulation Control</title>
+  <style>
+    :root{color-scheme:dark;--bg:#10131a;--panel:#191e28;--line:#2b3341;--muted:#9ba7b7;--text:#edf2f8;--accent:#78a9ff;--green:#52d49a;--red:#ff7178}
+    *{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 80% -20%,#233a61 0,transparent 42%),var(--bg);color:var(--text);font:15px/1.5 system-ui,Segoe UI,sans-serif}
+    main{max-width:1180px;margin:36px auto;padding:0 22px}.eyebrow{color:var(--accent);letter-spacing:.12em;text-transform:uppercase;font-size:12px;font-weight:700}h1{font-size:32px;margin:6px 0}p{color:var(--muted);margin:5px 0 22px}.layout{display:grid;grid-template-columns:1.35fr .85fr;gap:18px}.card{background:color-mix(in srgb,var(--panel) 94%,transparent);border:1px solid var(--line);border-radius:16px;padding:20px;box-shadow:0 12px 40px #0003}.wide{grid-column:1/-1}label{font-weight:650;display:block;margin-bottom:8px}textarea,input{width:100%;border:1px solid var(--line);background:#0e1219;color:var(--text);border-radius:10px;padding:12px;font:inherit}textarea{min-height:82px;resize:vertical}.row{display:flex;gap:10px;margin-top:13px;align-items:center;flex-wrap:wrap}button{border:0;border-radius:10px;padding:10px 16px;font:inherit;font-weight:700;cursor:pointer;background:var(--accent);color:#101722}button.stop{background:#49262c;color:#ffdadd}button:disabled{opacity:.5;cursor:default}.pill{border:1px solid var(--line);border-radius:999px;padding:5px 11px;color:var(--muted);font-size:13px}.status{font-weight:700;text-transform:capitalize}.status.running,.status.predicting,.status.completed{color:var(--green)}.status.error{color:var(--red)}.cams{display:grid;grid-template-columns:1fr 1fr;gap:12px}.cam{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#0b0e13}.cam img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block}.cam span{display:block;padding:7px 10px;color:var(--muted);font-size:13px}.kv{display:grid;grid-template-columns:140px 1fr;gap:8px 12px;font-size:13px}.kv div:nth-child(odd){color:var(--muted)}code{color:#b8d0ff;word-break:break-all}.hint{font-size:13px;color:var(--muted);margin-top:12px}.mono{font:12px ui-monospace,Consolas,monospace;white-space:pre-wrap;word-break:break-word;color:#c4cfdd}@media(max-width:760px){.layout{grid-template-columns:1fr}.wide{grid-column:auto}.cams{grid-template-columns:1fr}}
+  </style>
+</head>
+<body><main>
+  <div class="eyebrow">Local simulator · policy bridge</div><h1>SmolVLA feedback control</h1>
+  <p>Enter an instruction, send live simulator observations to the policy endpoint, and return its joint targets to MuJoCo.</p>
+  <div class="layout">
+    <section class="card"><label for="task">Task instruction</label><textarea id="task" placeholder="Put the red ball on the plate."></textarea>
+      <div class="row"><button id="start">Start control loop</button><button id="stop" class="stop" disabled>Stop</button><span class="pill">State: <span id="state" class="status">idle</span></span></div>
+      <div id="message" class="hint">Enter a task and press Start. For a no-motion check, start the mock policy server first.</div>
+    </section>
+    <section class="card"><h3 style="margin:0 0 12px">Connection and last prediction</h3><div class="kv"><div>Policy endpoint</div><div><code id="policy">loading…</code></div><div>Feedback sequence</div><div id="seq">—</div><div>Simulation time</div><div id="simtime">—</div><div>Policy latency</div><div id="latency">—</div><div>Last action (rad)</div><div class="mono" id="action">—</div></div></section>
+    <section class="card wide"><h3 style="margin:0 0 14px">Live simulator observations</h3><div class="cams"><div class="cam"><img id="agentview" alt="agentview waiting"><span>agentview</span></div><div class="cam"><img id="topview" alt="topview waiting"><span>topview</span></div></div></section>
+    <section class="card wide"><strong>Feature contract</strong><div class="hint">Input: <code>observation.images.agentview</code>, <code>observation.images.topview</code> (JPEG/base64), <code>observation.state</code> (6 float32 revolute-joint positions in radians, including gripper_motor_joint), and <code>task</code>. Output: <code>action</code> (6 float32 absolute target radians in joint_1…joint_5,gripper_motor_joint order), plus optional <code>done</code>/<code>success</code>.</div></section>
+  </div>
+</main>
+<script>
+const $=id=>document.getElementById(id);let active=false;
+async function refresh(){try{const s=await(await fetch('/api/status')).json();$('state').textContent=s.state||'idle';$('state').className='status '+(s.state||'');$('message').textContent=s.message||'';$('seq').textContent=s.bridge_seq??'—';$('simtime').textContent=s.sim_time==null?'—':Number(s.sim_time).toFixed(2)+' s';$('latency').textContent=s.policy_latency_ms==null?'—':s.policy_latency_ms+' ms';$('action').textContent=s.action?JSON.stringify(s.action):'—';active=['running','predicting'].includes(s.state);$('start').disabled=active;$('stop').disabled=!active;
+const imgs=await(await fetch('/api/preview')).json();for(const cam of ['agentview','topview'])if(imgs[cam]?.data_base64)$(`${cam}`).src='data:image/jpeg;base64,'+imgs[cam].data_base64;
+}catch(e){$('message').textContent='Dashboard connection error: '+e}}
+$('start').onclick=async()=>{const r=await fetch('/api/start',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({task:$('task').value})});const j=await r.json();if(!j.ok)$('message').textContent=j.error;refresh()};$('stop').onclick=async()=>{await fetch('/api/stop',{method:'POST'});refresh()};
+fetch('/api/config').then(r=>r.json()).then(c=>$('policy').textContent=c.policy_url);setInterval(refresh,700);refresh();
+</script></body></html>

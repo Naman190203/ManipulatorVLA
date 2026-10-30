@@ -1,0 +1,3521 @@
+{
+  "schema_version": 2,
+  "seed": 42,
+  "scene": "assets/scene_with_balls_cameras.xml",
+  "camera_names": [
+    "agentview",
+    "topview"
+  ],
+  "action_representation": "absolute_joint_target_rad",
+  "joint_order": [
+    "joint_1",
+    "joint_2",
+    "joint_3",
+    "joint_4",
+    "joint_5",
+    "gripper_motor_joint"
+  ],
+  "gripper_mechanism": "single_revolute_motor_driving_parallel_translating_fingers",
+  "episodes": [
+    {
+      "episode_id": "episode_00000",
+      "task_id": "place_red_ball_on_plate",
+      "instruction": "Put the red ball on the plate.",
+      "target_object": "red_ball",
+      "target_receptacle": "placement_plate",
+      "object_positions": {
+        "red_ball": [
+          0.2,
+          -0.12,
+          0.02
+        ],
+        "green_ball": [
+          0.3003,
+          0.2601,
+          0.02
+        ],
+        "blue_ball": [
+          0.3609,
+          0.0797,
+          0.02
+        ],
+        "orange_cube": [
+          0.3005,
+          -0.0396,
+          0.018
+        ],
+        "purple_cube": [
+          0.3606,
+          -0.0396,
+          0.018
+        ]
+      },
+      "collection_note": "Record only after the object is placed on the plate and the task is visibly complete."
+    },
+    {
+      "episode_id": "episode_00001",
+      "task_id": "place_green_ball_on_plate",
+      "instruction": "Put the green ball on the plate.",
+      "target_object": "green_ball",
+      "target_receptacle": "placement_plate",
+      "object_positions": {
+        "green_ball": [
+          0.2,
+          -0.12,
+          0.02
+        ],
+        "red_ball": [
+          0.3007,
+          -0.1593,
+          0.02
+        ],
+        "blue_ball": [
+          0.2998,
+          -0.1001,
+          0.02
+        ],
+        "orange_cube": [
+          0.2999,
+          0.2595,
+          0.018
+        ],
+        "purple_cube": [
+          0.2991,
+          0.1403,
+          0.018
+        ]
+      },
+      "collection_note": "Record only after the object is placed on the plate and the task is visibly complete."
+    },
+    {
+      "episode_id": "episode_00002",
+      "task_id": "place_blue_ball_on_plate",
+      "instruction": "Put the blue ball on the plate.",
+      "target_object": "blue_ball",
+      "target_receptacle": "placement_plate",
+      "object_positions": {
+        "blue_ball": [
+          0.2,
+          -0.12,
+          0.02
+        ],
+        "red_ball": [
+          0.299,
+          0.2004,
+          0.02
+        ],
+        "green_ball": [
+          0.2992,
+          -0.0997,
+          0.02
+        ],
+        "orange_cube": [
+          0.2991,
+          0.0198,
+          0.018
+        ],
+        "purple_cube": [
+          0.301,
+          0.0801,
+          0.018
+        ]
+      },
+      "collection_note": "Record only after the object is placed on the plate and the task is visibly complete."
+    },
+    {
+      "episode_id": "episode_00003",
+      "task_id": "place_orange_cube_on_plate",
+      "instruction": "Pick up the orange cube and place it on the plate.",
+      "target_object": "orange_cube",
+      "target_receptacle": "placement_plate",
+      "object_positions": {
+        "orange_cube": [
+          0.2,
+          -0.12,
+          0.018
+        ],
+        "red_ball": [
+          0.3591,
+          0.2003,
+          0.02
+        ],
+        "green_ball": [
+          0.3008,
+          -0.1591,
+          0.02
+        ],
+        "blue_ball": [
+          0.3595,
+          0.1394,
+          0.02
+        ],
+        "purple_cube": [
+          0.361,
+          -0.0997,
+          0.018
+        ]
+      },
+      "collection_note": "Record only after the object is placed on the plate and the task is visibly complete."
+    },
+    {
+      "episode_id": "episode_00004",
+      "task_id": "place_purple_cube_on_plate",
+      "instruction": "Pick up the purple cube and place it on the plate.",
+      "target_object": "purple_cube",
+      "target_receptacle": "placement_plate",
+      "object_positions": {
+        "purple_cube": [
+          0.2,
+          -0.12,
+          0.018
+        ],
+        "red_ball": [
+          0.3595,
+          -0.0992,
+          0.02
+        ],
+        "green_ball": [
+          0.3599,
+          -0.0393,
+          0.02
+        ],
+        "blue_ball": [
+          0.2998,
+          0.1397,
+          0.02
+        ],
+        "orange_cube": [
+          0.2992,
+          -0.1001,
+          0.018
+        ]
+      },
+      "collection_note": "Record only after the object is placed on the plate and the task is visibly complete."
+    },
+    {
+      "episode_id": "episode_00005",
+      "task_id": "place_red_ball_on_plate",
+      "instruction": "Put the red ball on the plate.",
+      "target_object": "red_ball",
+      "target_receptacle": "placement_plate",
+      "object_positions": {
+        "red_ball": [
+          0.22,
+          -0.12,
+          0.02
+        ],
+        "green_ball": [
+          0.3595,
+          0.1402,
+          0.02
+        ],
+        "blue_ball": [
+          0.3594,
+          -0.0398,
+          0.02
+        ],
+        "orange_cube": [
+          0.3604,
+          0.0195,
+          0.018
+        ],
+        "purple_cube": [
+          0.1196,
+          -0.1591,
+          0.018
+        ]
+      },
+      "collection_note": "Record only after the object is placed on the plate and the task is visibly complete."
+    },
+    {
+      "episode_id": "episode_00006",
+      "task_id": "place_green_ball_on_plate",
+      "instruction": "Put the green ball on the plate.",
+      "target_object": "green_ball",
+      "target_receptacle": "placement_plate",
+      "object_positions": {
+        "green_ball": [
+          0.22,
+          -0.12,
+          0.02
+        ],
+        "red_ball": [
+          0.3601,
+          -0.0404,
+          0.02
+        ],
+        "blue_ball": [
+          0.3596,
+          -0.1001,
+          0.02
+        ],
+        "orange_cube": [
+          0.119,
+          -0.1598,
+          0.018
+        ],
+        "purple_cube": [
+          0.1193,
+          0.2597,
+          0.018
+        ]
+      },
+      "collection_note": "Record only after the object is placed on the plate and the task is visibly complete."
+    },
+    {
+      "episode_id": "episode_00007",
+      "task_id": "place_blue_ball_on_plate",
+      "instruction": "Put the blue ball on the plate.",
+      "target_object": "blue_ball",
+      "target_receptacle": "placement_plate",
+      "object_positions": {
+        "blue_ball": [
+          0.22,
+          -0.12,
+          0.02
+        ],
+        "red_ball": [
+          0.3591,
+          0.2597,
+          0.02
+        ],
+        "green_ball": [
+          0.3592,
+          0.0209,
+          0.02
+        ],
+        "orange_cube": [
+          0.3601,
+          0.1999,
+          0.018
+        ],
+        "purple_cube": [
+          0.3604,
+          -0.0399,
+          0.018
+        ]
+      },
+      "collection_note": "Record only after the object is placed on the plate and the task is visibly complete."
+    },
+    {
+      "episode_id": "episode_00008",
+      "task_id": "place_orange_cube_on_plate",
+      "instruction": "Pick up the orange cube and place it on the plate.",
+      "target_object": "orange_cube",
+      "target_receptacle": "placement_plate",
+      "object_positions": {
+        "orange_cube": [
+          0.22,
+          -0.12,
+          0.018
+        ],
+        "red_ball": [
+          0.3594,
+          0.2597,
+          0.02
+        ],
+        "green_ball": [
+          0.1209,
+          0.2606,
+          0.02
+        ],
+        "blue_ball": [
+          0.121,
+          -0.1594,
+          0.02
+        ],
+        "purple_cube": [
+          0.3607,
+          0.0194,
+          0.018
+        ]
+      },
+      "collection_note": "Record only after the object is placed on the plate and the task is visibly complete."
+    },
+    {
+      "episode_id": "episode_00009",
+      "task_id": "place_purple_cube_on_plate",
+      "instruction": "Pick up the purple cube and place it on the plate.",
+      "target_object": "purple_cube",
+      "target_receptacle": "placement_plate",
+      "object_positions": {
+        "purple_cube": [
+          0.22,
+          -0.12,
+          0.018
+        ],
+        "red_ball": [
+          0.3602,
+          -0.1005,
+          0.02
+        ],
+        "green_ball": [
+          0.1194,
+          -0.1591,
+          0.02
+        ],
+        "blue_ball": [
+          0.3597,
+          0.2596,
+          0.02
+        ],
+        "orange_cube": [
+          0.3603,
+          0.1397,
+          0.018
+        ]
+      },
+      "collection_note": "Record only after the object is placed on the plate and the task is visibly complete."
+    },
+    {
+      "episode_id": "episode_00010",
+      "task_id": "place_red_ball_on_plate",
+      "instruction": "Put the red ball on the plate.",
+      "target_object": "red_ball",
+      "target_receptacle": "placement_plate",
+      "object_positions": {
+        "red_ball": [
+          0.24,
+          -0.12,
+          0.02
+        ],
+        "green_ball": [
+          0.36,
+          0.0206,
+          0.02
+        ],
+        "blue_ball": [
+          0.3599,
+          -0.0396,
+          0.02
+        ],
+        "orange_cube": [
+          0.1201,
+          0.1998,
+          0.018
+        ],
+        "purple_cube": [
+          0.3603,
+          0.1396,
+          0.018
+        ]
+      },
+      "collection_note": "Record only after the object is placed on the plate and the task is visibly complete."
+    },
+    {
+      "episode_id": "episode_00011",
+      "task_id": "place_green_ball_on_plate",
+      "instruction": "Put the green ball on the plate.",
+      "target_object": "green_ball",
+      "target_receptacle": "placement_plate",
+      "object_positions": {
+        "green_ball": [
+          0.24,
+          -0.12,
+          0.02
+        ],
+        "red_ball": [
+          0.3599,
+          0.2001,
+          0.02
+        ],
+        "blue_ball": [
+          0.3608,
+          -0.1593,
+          0.02
+        ],
+        "orange_cube": [
+          0.1198,
+          0.1998,
+          0.018
+        ],
+        "purple_cube": [
+          0.1199,
+          -0.1592,
+          0.018
+        ]
+      },
+      "collection_note": "Record only after the object is placed on the plate and the task is visibly complete."
+    },
+    {
+      "episode_id": "episode_00012",
+      "task_id": "place_blue_ball_on_plate",
+      "instruction": "Put the blue ball on the plate.",
+      "target_object": "blue_ball",
+      "target_receptacle": "placement_plate",
+      "object_positions": {
+        "blue_ball": [
+          0.24,
+          -0.12,
+          0.02
+        ],
+        "red_ball": [
+          0.3597,
+          -0.1592,
+          0.02
+        ],
+        "green_ball": [
+          0.1206,
+          0.14,
+          0.02
+        ],
+        "orange_cube": [
+          0.3598,
+          0.2005,
+          0.018
+        ],
+        "purple_cube": [
+          0.3597,
+          0.0799,
+          0.018
+        ]
+      },
+      "collection_note": "Record only after the object is placed on the plate and the task is visibly complete."
+    },
+    {
+      "episode_id": "episode_00013",
+      "task_id": "place_orange_cube_on_plate",
+      "instruction": "Pick up the orange cube and place it on the plate.",
+      "target_object": "orange_cube",
+      "target_receptacle": "placement_plate",
+      "object_positions": {
+        "orange_cube": [
+          0.24,
+          -0.12,
+          0.018
+        ],
+        "red_ball": [
+          0.1207,
+          0.2608,
+          0.02
+        ],
+        "green_ball": [
+          0.3596,
+          0.2609,
+          0.02
+        ],
+        "blue_ball": [
+          0.1206,
+          0.2004,
+          0.02
+        ],
+        "purple_cube": [
+          0.3597,
+          0.1399,
+          0.018
+        ]
+      },
+      "collection_note": "Record only after the object is placed on the plate and the task is visibly complete."
+    },
+    {
+      "episode_id": "episode_00014",
+      "task_id": "place_purple_cube_on_plate",
+      "instruction": "Pick up the purple cube and place it on the plate.",
+      "target_object": "purple_cube",
+      "target_receptacle": "placement_plate",
+      "object_positions": {
+        "purple_cube": [
+          0.24,
+          -0.12,
+          0.018
+        ],
+        "red_ball": [
+          0.3592,
+          0.0806,
+          0.02
+        ],
+        "green_ball": [
+          0.3604,
+          0.2609,
+          0.02
+        ],
+        "blue_ball": [
+          0.1206,
+          -0.1597,
+          0.02
+        ],
+        "orange_cube": [
+          0.3602,
+          0.0205,
+          0.018
+        ]
+      },
+      "collection_note": "Record only after the object is placed on the plate and the task is visibly complete."
+    },
+    {
+      "episode_id": "episode_00015",
+      "task_id": "place_red_ball_on_plate",
+      "instruction": "Put the red ball on the plate.",
+      "target_object": "red_ball",
+      "target_receptacle": "placement_plate",
+      "object_positions": {
+        "red_ball": [
+          0.26,
+          -0.12,
+          0.02
+        ],
+        "green_ball": [
+          0.1197,
+          -0.1601,
+          0.02
+        ],
+        "blue_ball": [
+          0.1197,
+          0.2007,
+          0.02
+        ],
+        "orange_cube": [
+          0.3607,
+          -0.0996,
+          0.018
+        ],
+        "purple_cube": [
+          0.3607,
+          0.2607,
+          0.018
+        ]
+      },
+      "collection_note": "Record only after the object is placed on the plate and the task is visibly complete."
+    },
+    {
+      "episode_id": "episode_00016",
+      "task_id": "place_green_ball_on_plate",
+      "instruction": "Put the green ball on the plate.",
+      "target_object": "green_ball",
+      "target_receptacle": "placement_plate",
+      "object_positions": {
+        "green_ball": [
+          0.26,
+          -0.12,
+          0.02
+        ],
+        "red_ball": [
+          0.1194,
+          0.1406,
+          0.02
+        ],
+        "blue_ball": [
+          0.3592,
+          0.1394,
+          0.02
+        ],
+        "orange_cube": [
+          0.1207,
+          -0.1606,
+          0.018
+        ],
+        "purple_cube": [
+          0.359,
+          -0.1591,
+          0.018
+        ]
+      },
+      "collection_note": "Record only after the object is placed on the plate and the task is visibly complete."
+    },
+    {
+      "episode_id": "episode_00017",
+      "task_id": "place_blue_ball_on_plate",
+      "instruction": "Put the blue ball on the plate.",
+      "target_object": "blue_ball",
+      "target_receptacle": "placement_plate",
+      "object_positions": {
+        "blue_ball": [
+          0.26,
+          -0.12,
+          0.02
+        ],
+        "red_ball": [
+          0.3593,
+          0.1391,
+          0.02
+        ],
+        "green_ball": [
+          0.3591,
+          0.1996,
+          0.02
+        ],
+        "orange_cube": [
+          0.3596,
+          0.0804,
+          0.018
+        ],
+        "purple_cube": [
+          0.3605,
+          -0.0998,
+          0.018
+        ]
+      },
+      "collection_note": "Record only after the object is placed on the plate and the task is visibly complete."
+    },
+    {
+      "episode_id": "episode_00018",
+      "task_id": "place_orange_cube_on_plate",
+      "instruction": "Pick up the orange cube and place it on the plate.",
+      "target_object": "orange_cube",
+      "target_receptacle": "placement_plate",
+      "object_positions": {
+        "orange_cube": [
+          0.26,
+          -0.12,
+          0.018
+        ],
+        "red_ball": [
+          0.1191,
+          0.2003,
+          0.02
+        ],
+        "green_ball": [
+          0.3605,
+          -0.0398,
+          0.02
+        ],
+        "blue_ball": [
+          0.3606,
+          0.0195,
+          0.02
+        ],
+        "purple_cube": [
+          0.36,
+          0.0799,
+          0.018
+        ]
+      },
+      "collection_note": "Record only after the object is placed on the plate and the task is visibly complete."
+    },
+    {
+      "episode_id": "episode_00019",
+      "task_id": "place_purple_cube_on_plate",
+      "instruction": "Pick up the purple cube and place it on the plate.",
+      "target_object": "purple_cube",
+      "target_receptacle": "placement_plate",
+      "object_positions": {
+        "purple_cube": [
+          0.26,
+          -0.12,
+          0.018
+        ],
+        "red_ball": [
+          0.1193,
+          -0.1602,
+          0.02
+        ],
+        "green_ball": [
+          0.3595,
+          0.1393,
+          0.02
+        ],
+        "blue_ball": [
+          0.3602,
+          -0.0394,
+          0.02
+        ],
+        "orange_cube": [
+          0.3594,
+          0.0793,
+          0.018
+        ]
+      },
+      "collection_note": "Record only after the object is placed on the plate and the task is visibly complete."
+    },
+    {
+      "episode_id": "episode_00020",
+      "task_id": "place_red_ball_on_plate",
+      "instruction": "Put the red ball on the plate.",
+      "target_object": "red_ball",
+      "target_receptacle": "placement_plate",
+      "object_positions": {
+        "red_ball": [
+          0.28,
+          -0.12,
+          0.02
+        ],
+        "green_ball": [
+          0.1799,
+          0.0796,
+          0.02
+        ],
+        "blue_ball": [
+          0.1802,
+          -0.0395,
+          0.02
+        ],
+        "orange_cube": [
+          0.1202,
+          -0.1592,
+          0.018
+        ],
+        "purple_cube": [
+          0.181,
+          0.1399,
+          0.018
+        ]
+      },
+      "collection_note": "Record only after the object is placed on the plate and the task is visibly complete."
+    },
+    {
+      "episode_id": "episode_00021",
+      "task_id": "place_green_ball_on_plate",
+      "instruction": "Put the green ball on the plate.",
+      "target_object": "green_ball",
+      "target_receptacle": "placement_plate",
+      "object_positions": {
+        "green_ball": [
+          0.28,
+          -0.12,
+          0.02
+        ],
+        "red_ball": [
+          0.1794,
+          -0.0403,
+          0.02
+        ],
+        "blue_ball": [
+          0.1199,
+          0.1396,
+          0.02
+        ],
+        "orange_cube": [
+          0.1792,
+          0.2609,
+          0.018
+        ],
+        "purple_cube": [
+          0.1801,
+          -0.1002,
+          0.018
+        ]
+      },
+      "collection_note": "Record only after the object is placed on the plate and the task is visibly complete."
+    },
+    {
+      "episode_id": "episode_00022",
+      "task_id": "place_blue_ball_on_plate",
+      "instruction": "Put the blue ball on the plate.",
+      "target_object": "blue_ball",
+      "target_receptacle": "placement_plate",
+      "object_positions": {
+        "blue_ball": [
+          0.28,
+          -0.12,
+          0.02
+        ],
+        "red_ball": [
+          0.1793,
+          -0.1006,
+          0.02
+        ],
+        "green_ball": [
+          0.1802,
+          -0.0395,
+          0.02
+        ],
+        "orange_cube": [
+          0.1209,
+          -0.1597,
+          0.018
+        ],
+        "purple_cube": [
+          0.1193,
+          0.1409,
+          0.018
+        ]
+      },
+      "collection_note": "Record only after the object is placed on the plate and the task is visibly complete."
+    },
+    {
+      "episode_id": "episode_00023",
+      "task_id": "place_orange_cube_on_plate",
+      "instruction": "Pick up the orange cube and place it on the plate.",
+      "target_object": "orange_cube",
+      "target_receptacle": "placement_plate",
+      "object_positions": {
+        "orange_cube": [
+          0.28,
+          -0.12,
+          0.018
+        ],
+        "red_ball": [
+          0.1199,
+          -0.1604,
+          0.02
+        ],
+        "green_ball": [
+          0.1802,
+          0.1407,
+          0.02
+        ],
+        "blue_ball": [
+          0.1806,
+          -0.1002,
+          0.02
+        ],
+        "purple_cube": [
+          0.181,
+          0.02,
+          0.018
+        ]
+      },
+      "collection_note": "Record only after the object is placed on the plate and the task is visibly complete."
+    },
+    {
+      "episode_id": "episode_00024",
+      "task_id": "place_purple_cube_on_plate",
+      "instruction": "Pick up the purple cube and place it on the plate.",
+      "target_object": "purple_cube",
+      "target_receptacle": "placement_plate",
+      "object_positions": {
+        "purple_cube": [
+          0.28,
+          -0.12,
+          0.018
+        ],
+        "red_ball": [
+          0.1799,
+          0.1404,
+          0.02
+        ],
+        "green_ball": [
+          0.1207,
+          -0.1593,
+          0.02
+        ],
+        "blue_ball": [
+          0.1799,
+          0.0192,
+          0.02
+        ],
+        "orange_cube": [
+          0.1803,
+          0.0807,
+          0.018
+        ]
+      },
+      "collection_note": "Record only after the object is placed on the plate and the task is visibly complete."
+    },
+    {
+      "episode_id": "episode_00025",
+      "task_id": "place_red_ball_on_plate",
+      "instruction": "Put the red ball on the plate.",
+      "target_object": "red_ball",
+      "target_receptacle": "placement_plate",
+      "object_positions": {
+        "red_ball": [
+          0.2,
+          -0.08,
+          0.02
+        ],
+        "green_ball": [
+          0.3598,
+          0.0797,
+          0.02
+        ],
+        "blue_ball": [
+          0.3002,
+          -0.0405,
+          0.02
+        ],
+        "orange_cube": [
+          0.3001,
+          0.1991,
+          0.018
+        ],
+        "purple_cube": [
+          0.3002,
+          -0.1602,
+          0.018
+        ]
+      },
+      "collection_note": "Record only after the object is placed on the plate and the task is visibly complete."
+    },
+    {
+      "episode_id": "episode_00026",
+      "task_id": "place_green_ball_on_plate",
+      "instruction": "Put the green ball on the plate.",
+      "target_object": "green_ball",
+      "target_receptacle": "placement_plate",
+      "object_positions": {
+        "green_ball": [
+          0.2,
+          -0.08,
+          0.02
+        ],
+        "red_ball": [
+          0.3606,
+          -0.0395,
+          0.02
+        ],
+        "blue_ball": [
+          0.3005,
+          0.0192,
+          0.02
+        ],
+        "orange_cube": [
+          0.3609,
+          0.2606,
+          0.018
+        ],
+        "purple_cube": [
+          0.3606,
+          -0.1,
+          0.018
+        ]
+      },
+      "collection_note": "Record only after the object is placed on the plate and the task is visibly complete."
+    },
+    {
+      "episode_id": "episode_00027",
+      "task_id": "place_blue_ball_on_plate",
+      "instruction": "Put the blue ball on the plate.",
+      "target_object": "blue_ball",
+      "target_receptacle": "placement_plate",
+      "object_positions": {
+        "blue_ball": [
+          0.2,
+          -0.08,
+          0.02
+        ],
+        "red_ball": [
+          0.2993,
+          0.2009,
+          0.02
+        ],
+        "green_ball": [
+          0.3593,
+          -0.1001,
+          0.02
+        ],
+        "orange_cube": [
+          0.3006,
+          0.0808,
+          0.018
+        ],
+        "purple_cube": [
+          0.3605,
+          0.0793,
+          0.018
+        ]
+      },
+      "collection_note": "Record only after the object is placed on the plate and the task is visibly complete."
+    },
+    {
+      "episode_id": "episode_00028",
+      "task_id": "place_orange_cube_on_plate",
+      "instruction": "Pick up the orange cube and place it on the plate.",
+      "target_object": "orange_cube",
+      "target_receptacle": "placement_plate",
+      "object_positions": {
+        "orange_cube": [
+          0.2,
+          -0.08,
+          0.018
+        ],
+        "red_ball": [
+          0.3601,
+          -0.0394,
+          0.02
+        ],
+        "green_ball": [
+          0.2991,
+          -0.0403,
+          0.02
+        ],
+        "blue_ball": [
+          0.2992,
+          -0.1606,
+          0.02
+        ],
+        "purple_cube": [
+          0.3593,
+          0.2598,
+          0.018
+        ]
+      },
+      "collection_note": "Record only after the object is placed on the plate and the task is visibly complete."
+    },
+    {
+      "episode_id": "episode_00029",
+      "task_id": "place_purple_cube_on_plate",
+      "instruction": "Pick up the purple cube and place it on the plate.",
+      "target_object": "purple_cube",
+      "target_receptacle": "placement_plate",
+      "object_positions": {
+        "purple_cube": [
+          0.2,
+          -0.08,
+          0.018
+        ],
+        "red_ball": [
+          0.3599,
+          0.2598,
+          0.02
+        ],
+        "green_ball": [
+          0.2991,
+          -0.1,
+          0.02
+        ],
+        "blue_ball": [
+          0.3607,
+          0.0203,
+          0.02
+        ],
+        "orange_cube": [
+          0.361,
+          -0.1599,
+          0.018
+        ]
+      },
+      "collection_note": "Record only after the object is placed on the plate and the task is visibly complete."
+    },
+    {
+      "episode_id": "episode_00030",
+      "task_id": "place_red_ball_on_plate",
+      "instruction": "Put the red ball on the plate.",
+      "target_object": "red_ball",
+      "target_receptacle": "placement_plate",
+      "object_positions": {
+        "red_ball": [
+          0.22,
+          -0.08,
+          0.02
+        ],
+        "green_ball": [
+          0.3592,
+          0.2596,
+          0.02
+        ],
+        "blue_ball": [
+          0.3596,
+          0.0192,
+          0.02
+        ],
+        "orange_cube": [
+          0.3597,
+          0.2001,
+          0.018
+        ],
+        "purple_cube": [
+          0.1193,
+          0.1391,
+          0.018
+        ]
+      },
+      "collection_note": "Record only after the object is placed on the plate and the task is visibly complete."
+    },
+    {
+      "episode_id": "episode_00031",
+      "task_id": "place_green_ball_on_plate",
+      "instruction": "Put the green ball on the plate.",
+      "target_object": "green_ball",
+      "target_receptacle": "placement_plate",
+      "object_positions": {
+        "green_ball": [
+          0.22,
+          -0.08,
+          0.02
+        ],
+        "red_ball": [
+          0.3605,
+          -0.1006,
+          0.02
+        ],
+        "blue_ball": [
+          0.1204,
+          -0.1604,
+          0.02
+        ],
+        "orange_cube": [
+          0.1198,
+          0.2593,
+          0.018
+        ],
+        "purple_cube": [
+          0.3606,
+          0.0801,
+          0.018
+        ]
+      },
+      "collection_note": "Record only after the object is placed on the plate and the task is visibly complete."
+    },
+    {
+      "episode_id": "episode_00032",
+      "task_id": "place_blue_ball_on_plate",
+      "instruction": "Put the blue ball on the plate.",
+      "target_object": "blue_ball",
+      "target_receptacle": "placement_plate",
+      "object_positions": {
+        "blue_ball": [
+          0.22,
+          -0.08,
+          0.02
+        ],
+        "red_ball": [
+          0.1196,
+          0.1994,
+          0.02
+        ],
+        "green_ball": [
+          0.3595,
+          0.1401,
+          0.02
+        ],
+        "orange_cube": [
+          0.3603,
+          0.1997,
+          0.018
+        ],
+        "purple_cube": [
+          0.3593,
+          0.0801,
+          0.018
+        ]
+      },
+      "collection_note": "Record only after the object is placed on the plate and the task is visibly complete."
+    },
+    {
+      "episode_id": "episode_00033",
+      "task_id": "place_orange_cube_on_plate",
+      "instruction": "Pick up the orange cube and place it on the plate.",
+      "target_object": "orange_cube",
+      "target_receptacle": "placement_plate",
+      "object_positions": {
+        "orange_cube": [
+          0.22,
+          -0.08,
+          0.018
+        ],
+        "red_ball": [
+          0.1196,
+          -0.1602,
+          0.02
+        ],
+        "green_ball": [
+          0.3592,
+          -0.0393,
+          0.02
+        ],
+        "blue_ball": [
+          0.3599,
+          -0.1608,
+          0.02
+        ],
+        "purple_cube": [
+          0.3603,
+          0.1401,
+          0.018
+        ]
+      },
+      "collection_note": "Record only after the object is placed on the plate and the task is visibly complete."
+    },
+    {
+      "episode_id": "episode_00034",
+      "task_id": "place_purple_cube_on_plate",
+      "instruction": "Pick up the purple cube and place it on the plate.",
+      "target_object": "purple_cube",
+      "target_receptacle": "placement_plate",
+      "object_positions": {
+        "purple_cube": [
+          0.22,
+          -0.08,
+          0.018
+        ],
+        "red_ball": [
+          0.3599,
+          0.0196,
+          0.02
+        ],
+        "green_ball": [
+          0.3607,
+          0.2592,
+          0.02
+        ],
+        "blue_ball": [
+          0.1194,
+          -0.1595,
+          0.02
+        ],
+        "orange_cube": [
+          0.1205,
+          0.1999,
+          0.018
+        ]
+      },
+      "collection_note": "Record only after the object is placed on the plate and the task is visibly complete."
+    },
+    {
+      "episode_id": "episode_00035",
+      "task_id": "place_red_ball_on_plate",
+      "instruction": "Put the red ball on the plate.",
+      "target_object": "red_ball",
+      "target_receptacle": "placement_plate",
+      "object_positions": {
+        "red_ball": [
+          0.24,
+          -0.08,
+          0.02
+        ],
+        "green_ball": [
+          0.1197,
+          0.2604,
+          0.02
+        ],
+        "blue_ball": [
+          0.1193,
+          0.1391,
+          0.02
+        ],
+        "orange_cube": [
+          0.3595,
+          -0.1001,
+          0.018
+        ],
+        "purple_cube": [
+          0.3591,
+          0.2592,
+          0.018
+        ]
+      },
+      "collection_note": "Record only after the object is placed on the plate and the task is visibly complete."
+    },
+    {
+      "episode_id": "episode_00036",
+      "task_id": "place_green_ball_on_plate",
+      "instruction": "Put the green ball on the plate.",
+      "target_object": "green_ball",
+      "target_receptacle": "placement_plate",
+      "object_positions": {
+        "green_ball": [
+          0.24,
+          -0.08,
+          0.02
+        ],
+        "red_ball": [
+          0.3604,
+          -0.0399,
+          0.02
+        ],
+        "blue_ball": [
+          0.3594,
+          0.1394,
+          0.02
+        ],
+        "orange_cube": [
+          0.3603,
+          0.0198,
+          0.018
+        ],
+        "purple_cube": [
+          0.1198,
+          0.2606,
+          0.018
+        ]
+      },
+      "collection_note": "Record only after the object is placed on the plate and the task is visibly complete."
+    },
+    {
+      "episode_id": "episode_00037",
+      "task_id": "place_blue_ball_on_plate",
+      "instruction": "Put the blue ball on the plate.",
+      "target_object": "blue_ball",
+      "target_receptacle": "placement_plate",
+      "object_positions": {
+        "blue_ball": [
+          0.24,
+          -0.08,
+          0.02
+        ],
+        "red_ball": [
+          0.1193,
+          -0.1606,
+          0.02
+        ],
+        "green_ball": [
+          0.3601,
+          0.1999,
+          0.02
+        ],
+        "orange_cube": [
+          0.3595,
+          0.0209,
+          0.018
+        ],
+        "purple_cube": [
+          0.3602,
+          -0.0995,
+          0.018
+        ]
+      },
+      "collection_note": "Record only after the object is placed on the plate and the task is visibly complete."
+    },
+    {
+      "episode_id": "episode_00038",
+      "task_id": "place_orange_cube_on_plate",
+      "instruction": "Pick up the orange cube and place it on the plate.",
+      "target_object": "orange_cube",
+      "target_receptacle": "placement_plate",
+      "object_positions": {
+        "orange_cube": [
+          0.24,
+          -0.08,
+          0.018
+        ],
+        "red_ball": [
+          0.3597,
+          0.0191,
+          0.02
+        ],
+        "green_ball": [
+          0.3608,
+          -0.1607,
+          0.02
+        ],
+        "blue_ball": [
+          0.3609,
+          0.2607,
+          0.02
+        ],
+        "purple_cube": [
+          0.3594,
+          -0.0401,
+          0.018
+        ]
+      },
+      "collection_note": "Record only after the object is placed on the plate and the task is visibly complete."
+    },
+    {
+      "episode_id": "episode_00039",
+      "task_id": "place_purple_cube_on_plate",
+      "instruction": "Pick up the purple cube and place it on the plate.",
+      "target_object": "purple_cube",
+      "target_receptacle": "placement_plate",
+      "object_positions": {
+        "purple_cube": [
+          0.24,
+          -0.08,
+          0.018
+        ],
+        "red_ball": [
+          0.3597,
+          0.2601,
+          0.02
+        ],
+        "green_ball": [
+          0.3602,
+          0.1404,
+          0.02
+        ],
+        "blue_ball": [
+          0.3602,
+          -0.0409,
+          0.02
+        ],
+        "orange_cube": [
+          0.1198,
+          0.2606,
+          0.018
+        ]
+      },
+      "collection_note": "Record only after the object is placed on the plate and the task is visibly complete."
+    },
+    {
+      "episode_id": "episode_00040",
+      "task_id": "place_red_ball_on_plate",
+      "instruction": "Put the red ball on the plate.",
+      "target_object": "red_ball",
+      "target_receptacle": "placement_plate",
+      "object_positions": {
+        "red_ball": [
+          0.26,
+          -0.08,
+          0.02
+        ],
+        "green_ball": [
+          0.1197,
+          0.1405,
+          0.02
+        ],
+        "blue_ball": [
+          0.3603,
+          0.0207,
+          0.02
+        ],
+        "orange_cube": [
+          0.3597,
+          -0.0403,
+          0.018
+        ],
+        "purple_cube": [
+          0.3604,
+          0.081,
+          0.018
+        ]
+      },
+      "collection_note": "Record only after the object is placed on the plate and the task is visibly complete."
+    },
+    {
+      "episode_id": "episode_00041",
+      "task_id": "place_green_ball_on_plate",
+      "instruction": "Put the green ball on the plate.",
+      "target_object": "green_ball",
+      "target_receptacle": "placement_plate",
+      "object_positions": {
+        "green_ball": [
+          0.26,
+          -0.08,
+          0.02
+        ],
+        "red_ball": [
+          0.1207,
+          0.1997,
+          0.02
+        ],
+        "blue_ball": [
+          0.3601,
+          0.2596,
+          0.02
+        ],
+        "orange_cube": [
+          0.1205,
+          -0.1606,
+          0.018
+        ],
+        "purple_cube": [
+          0.3609,
+          -0.04,
+          0.018
+        ]
+      },
+      "collection_note": "Record only after the object is placed on the plate and the task is visibly complete."
+    },
+    {
+      "episode_id": "episode_00042",
+      "task_id": "place_blue_ball_on_plate",
+      "instruction": "Put the blue ball on the plate.",
+      "target_object": "blue_ball",
+      "target_receptacle": "placement_plate",
+      "object_positions": {
+        "blue_ball": [
+          0.26,
+          -0.08,
+          0.02
+        ],
+        "red_ball": [
+          0.121,
+          0.1995,
+          0.02
+        ],
+        "green_ball": [
+          0.1207,
+          0.1397,
+          0.02
+        ],
+        "orange_cube": [
+          0.3606,
+          0.0791,
+          0.018
+        ],
+        "purple_cube": [
+          0.121,
+          0.2609,
+          0.018
+        ]
+      },
+      "collection_note": "Record only after the object is placed on the plate and the task is visibly complete."
+    },
+    {
+      "episode_id": "episode_00043",
+      "task_id": "place_orange_cube_on_plate",
+      "instruction": "Pick up the orange cube and place it on the plate.",
+      "target_object": "orange_cube",
+      "target_receptacle": "placement_plate",
+      "object_positions": {
+        "orange_cube": [
+          0.26,
+          -0.08,
+          0.018
+        ],
+        "red_ball": [
+          0.1198,
+          -0.1597,
+          0.02
+        ],
+        "green_ball": [
+          0.1198,
+          0.2601,
+          0.02
+        ],
+        "blue_ball": [
+          0.3596,
+          -0.0392,
+          0.02
+        ],
+        "purple_cube": [
+          0.36,
+          0.0192,
+          0.018
+        ]
+      },
+      "collection_note": "Record only after the object is placed on the plate and the task is visibly complete."
+    },
+    {
+      "episode_id": "episode_00044",
+      "task_id": "place_purple_cube_on_plate",
+      "instruction": "Pick up the purple cube and place it on the plate.",
+      "target_object": "purple_cube",
+      "target_receptacle": "placement_plate",
+      "object_positions": {
+        "purple_cube": [
+          0.26,
+          -0.08,
+          0.018
+        ],
+        "red_ball": [
+          0.361,
+          -0.0396,
+          0.02
+        ],
+        "green_ball": [
+          0.3601,
+          0.0205,
+          0.02
+        ],
+        "blue_ball": [
+          0.3592,
+          -0.1004,
+          0.02
+        ],
+        "orange_cube": [
+          0.1193,
+          0.1406,
+          0.018
+        ]
+      },
+      "collection_note": "Record only after the object is placed on the plate and the task is visibly complete."
+    },
+    {
+      "episode_id": "episode_00045",
+      "task_id": "place_red_ball_on_plate",
+      "instruction": "Put the red ball on the plate.",
+      "target_object": "red_ball",
+      "target_receptacle": "placement_plate",
+      "object_positions": {
+        "red_ball": [
+          0.28,
+          -0.08,
+          0.02
+        ],
+        "green_ball": [
+          0.1791,
+          0.2607,
+          0.02
+        ],
+        "blue_ball": [
+          0.1797,
+          0.2008,
+          0.02
+        ],
+        "orange_cube": [
+          0.1795,
+          -0.0997,
+          0.018
+        ],
+        "purple_cube": [
+          0.1209,
+          0.2,
+          0.018
+        ]
+      },
+      "collection_note": "Record only after the object is placed on the plate and the task is visibly complete."
+    },
+    {
+      "episode_id": "episode_00046",
+      "task_id": "place_green_ball_on_plate",
+      "instruction": "Put the green ball on the plate.",
+      "target_object": "green_ball",
+      "target_receptacle": "placement_plate",
+      "object_positions": {
+        "green_ball": [
+          0.28,
+          -0.08,
+          0.02
+        ],
+        "red_ball": [
+          0.1799,
+          0.2593,
+          0.02
+        ],
+        "blue_ball": [
+          0.1795,
+          0.1992,
+          0.02
+        ],
+        "orange_cube": [
+          0.1797,
+          -0.1007,
+          0.018
+        ],
+        "purple_cube": [
+          0.181,
+          0.0197,
+          0.018
+        ]
+      },
+      "collection_note": "Record only after the object is placed on the plate and the task is visibly complete."
+    },
+    {
+      "episode_id": "episode_00047",
+      "task_id": "place_blue_ball_on_plate",
+      "instruction": "Put the blue ball on the plate.",
+      "target_object": "blue_ball",
+      "target_receptacle": "placement_plate",
+      "object_positions": {
+        "blue_ball": [
+          0.28,
+          -0.08,
+          0.02
+        ],
+        "red_ball": [
+          0.1805,
+          0.1997,
+          0.02
+        ],
+        "green_ball": [
+          0.119,
+          0.2009,
+          0.02
+        ],
+        "orange_cube": [
+          0.1799,
+          0.0201,
+          0.018
+        ],
+        "purple_cube": [
+          0.12,
+          -0.16,
+          0.018
+        ]
+      },
+      "collection_note": "Record only after the object is placed on the plate and the task is visibly complete."
+    },
+    {
+      "episode_id": "episode_00048",
+      "task_id": "place_orange_cube_on_plate",
+      "instruction": "Pick up the orange cube and place it on the plate.",
+      "target_object": "orange_cube",
+      "target_receptacle": "placement_plate",
+      "object_positions": {
+        "orange_cube": [
+          0.28,
+          -0.08,
+          0.018
+        ],
+        "red_ball": [
+          0.1791,
+          -0.0996,
+          0.02
+        ],
+        "green_ball": [
+          0.1193,
+          0.2602,
+          0.02
+        ],
+        "blue_ball": [
+          0.1802,
+          0.2007,
+          0.02
+        ],
+        "purple_cube": [
+          0.1197,
+          0.141,
+          0.018
+        ]
+      },
+      "collection_note": "Record only after the object is placed on the plate and the task is visibly complete."
+    },
+    {
+      "episode_id": "episode_00049",
+      "task_id": "place_purple_cube_on_plate",
+      "instruction": "Pick up the purple cube and place it on the plate.",
+      "target_object": "purple_cube",
+      "target_receptacle": "placement_plate",
+      "object_positions": {
+        "purple_cube": [
+          0.28,
+          -0.08,
+          0.018
+        ],
+        "red_ball": [
+          0.179,
+          0.2596,
+          0.02
+        ],
+        "green_ball": [
+          0.1206,
+          0.1405,
+          0.02
+        ],
+        "blue_ball": [
+          0.121,
+          -0.1598,
+          0.02
+        ],
+        "orange_cube": [
+          0.1804,
+          0.1391,
+          0.018
+        ]
+      },
+      "collection_note": "Record only after the object is placed on the plate and the task is visibly complete."
+    },
+    {
+      "episode_id": "episode_00050",
+      "task_id": "place_red_ball_on_plate",
+      "instruction": "Put the red ball on the plate.",
+      "target_object": "red_ball",
+      "target_receptacle": "placement_plate",
+      "object_positions": {
+        "red_ball": [
+          0.2,
+          -0.04,
+          0.02
+        ],
+        "green_ball": [
+          0.3604,
+          -0.0396,
+          0.02
+        ],
+        "blue_ball": [
+          0.2995,
+          0.2,
+          0.02
+        ],
+        "orange_cube": [
+          0.3596,
+          -0.1591,
+          0.018
+        ],
+        "purple_cube": [
+          0.361,
+          -0.0995,
+          0.018
+        ]
+      },
+      "collection_note": "Record only after the object is placed on the plate and the task is visibly complete."
+    },
+    {
+      "episode_id": "episode_00051",
+      "task_id": "place_green_ball_on_plate",
+      "instruction": "Put the green ball on the plate.",
+      "target_object": "green_ball",
+      "target_receptacle": "placement_plate",
+      "object_positions": {
+        "green_ball": [
+          0.2,
+          -0.04,
+          0.02
+        ],
+        "red_ball": [
+          0.3605,
+          0.2607,
+          0.02
+        ],
+        "blue_ball": [
+          0.3008,
+          0.0795,
+          0.02
+        ],
+        "orange_cube": [
+          0.3593,
+          -0.0997,
+          0.018
+        ],
+        "purple_cube": [
+          0.2995,
+          0.0191,
+          0.018
+        ]
+      },
+      "collection_note": "Record only after the object is placed on the plate and the task is visibly complete."
+    },
+    {
+      "episode_id": "episode_00052",
+      "task_id": "place_blue_ball_on_plate",
+      "instruction": "Put the blue ball on the plate.",
+      "target_object": "blue_ball",
+      "target_receptacle": "placement_plate",
+      "object_positions": {
+        "blue_ball": [
+          0.2,
+          -0.04,
+          0.02
+        ],
+        "red_ball": [
+          0.3003,
+          0.2004,
+          0.02
+        ],
+        "green_ball": [
+          0.3598,
+          0.2599,
+          0.02
+        ],
+        "orange_cube": [
+          0.2993,
+          0.02,
+          0.018
+        ],
+        "purple_cube": [
+          0.3,
+          -0.0392,
+          0.018
+        ]
+      },
+      "collection_note": "Record only after the object is placed on the plate and the task is visibly complete."
+    },
+    {
+      "episode_id": "episode_00053",
+      "task_id": "place_orange_cube_on_plate",
+      "instruction": "Pick up the orange cube and place it on the plate.",
+      "target_object": "orange_cube",
+      "target_receptacle": "placement_plate",
+      "object_positions": {
+        "orange_cube": [
+          0.2,
+          -0.04,
+          0.018
+        ],
+        "red_ball": [
+          0.3601,
+          0.0801,
+          0.02
+        ],
+        "green_ball": [
+          0.2999,
+          0.201,
+          0.02
+        ],
+        "blue_ball": [
+          0.3597,
+          0.1408,
+          0.02
+        ],
+        "purple_cube": [
+          0.3592,
+          0.2007,
+          0.018
+        ]
+      },
+      "collection_note": "Record only after the object is placed on the plate and the task is visibly complete."
+    },
+    {
+      "episode_id": "episode_00054",
+      "task_id": "place_purple_cube_on_plate",
+      "instruction": "Pick up the purple cube and place it on the plate.",
+      "target_object": "purple_cube",
+      "target_receptacle": "placement_plate",
+      "object_positions": {
+        "purple_cube": [
+          0.2,
+          -0.04,
+          0.018
+        ],
+        "red_ball": [
+          0.3604,
+          0.2003,
+          0.02
+        ],
+        "green_ball": [
+          0.3002,
+          0.0791,
+          0.02
+        ],
+        "blue_ball": [
+          0.361,
+          -0.0397,
+          0.02
+        ],
+        "orange_cube": [
+          0.2997,
+          0.1391,
+          0.018
+        ]
+      },
+      "collection_note": "Record only after the object is placed on the plate and the task is visibly complete."
+    },
+    {
+      "episode_id": "episode_00055",
+      "task_id": "place_red_ball_on_plate",
+      "instruction": "Put the red ball on the plate.",
+      "target_object": "red_ball",
+      "target_receptacle": "placement_plate",
+      "object_positions": {
+        "red_ball": [
+          0.22,
+          -0.04,
+          0.02
+        ],
+        "green_ball": [
+          0.3592,
+          0.0191,
+          0.02
+        ],
+        "blue_ball": [
+          0.3598,
+          0.1995,
+          0.02
+        ],
+        "orange_cube": [
+          0.3594,
+          0.2607,
+          0.018
+        ],
+        "purple_cube": [
+          0.1195,
+          0.1397,
+          0.018
+        ]
+      },
+      "collection_note": "Record only after the object is placed on the plate and the task is visibly complete."
+    },
+    {
+      "episode_id": "episode_00056",
+      "task_id": "place_green_ball_on_plate",
+      "instruction": "Put the green ball on the plate.",
+      "target_object": "green_ball",
+      "target_receptacle": "placement_plate",
+      "object_positions": {
+        "green_ball": [
+          0.22,
+          -0.04,
+          0.02
+        ],
+        "red_ball": [
+          0.3598,
+          0.1396,
+          0.02
+        ],
+        "blue_ball": [
+          0.121,
+          0.14,
+          0.02
+        ],
+        "orange_cube": [
+          0.3594,
+          0.2001,
+          0.018
+        ],
+        "purple_cube": [
+          0.36,
+          0.0804,
+          0.018
+        ]
+      },
+      "collection_note": "Record only after the object is placed on the plate and the task is visibly complete."
+    },
+    {
+      "episode_id": "episode_00057",
+      "task_id": "place_blue_ball_on_plate",
+      "instruction": "Put the blue ball on the plate.",
+      "target_object": "blue_ball",
+      "target_receptacle": "placement_plate",
+      "object_positions": {
+        "blue_ball": [
+          0.22,
+          -0.04,
+          0.02
+        ],
+        "red_ball": [
+          0.3605,
+          0.2605,
+          0.02
+        ],
+        "green_ball": [
+          0.3591,
+          -0.1009,
+          0.02
+        ],
+        "orange_cube": [
+          0.1195,
+          -0.1603,
+          0.018
+        ],
+        "purple_cube": [
+          0.3594,
+          0.0808,
+          0.018
+        ]
+      },
+      "collection_note": "Record only after the object is placed on the plate and the task is visibly complete."
+    },
+    {
+      "episode_id": "episode_00058",
+      "task_id": "place_orange_cube_on_plate",
+      "instruction": "Pick up the orange cube and place it on the plate.",
+      "target_object": "orange_cube",
+      "target_receptacle": "placement_plate",
+      "object_positions": {
+        "orange_cube": [
+          0.22,
+          -0.04,
+          0.018
+        ],
+        "red_ball": [
+          0.1195,
+          0.14,
+          0.02
+        ],
+        "green_ball": [
+          0.1201,
+          -0.1603,
+          0.02
+        ],
+        "blue_ball": [
+          0.3609,
+          0.0802,
+          0.02
+        ],
+        "purple_cube": [
+          0.12,
+          0.1992,
+          0.018
+        ]
+      },
+      "collection_note": "Record only after the object is placed on the plate and the task is visibly complete."
+    },
+    {
+      "episode_id": "episode_00059",
+      "task_id": "place_purple_cube_on_plate",
+      "instruction": "Pick up the purple cube and place it on the plate.",
+      "target_object": "purple_cube",
+      "target_receptacle": "placement_plate",
+      "object_positions": {
+        "purple_cube": [
+          0.22,
+          -0.04,
+          0.018
+        ],
+        "red_ball": [
+          0.12,
+          0.1408,
+          0.02
+        ],
+        "green_ball": [
+          0.3597,
+          0.1402,
+          0.02
+        ],
+        "blue_ball": [
+          0.3603,
+          -0.0995,
+          0.02
+        ],
+        "orange_cube": [
+          0.1191,
+          0.2591,
+          0.018
+        ]
+      },
+      "collection_note": "Record only after the object is placed on the plate and the task is visibly complete."
+    },
+    {
+      "episode_id": "episode_00060",
+      "task_id": "place_red_ball_on_plate",
+      "instruction": "Put the red ball on the plate.",
+      "target_object": "red_ball",
+      "target_receptacle": "placement_plate",
+      "object_positions": {
+        "red_ball": [
+          0.24,
+          -0.04,
+          0.02
+        ],
+        "green_ball": [
+          0.3607,
+          0.0803,
+          0.02
+        ],
+        "blue_ball": [
+          0.3601,
+          0.2591,
+          0.02
+        ],
+        "orange_cube": [
+          0.3607,
+          0.1405,
+          0.018
+        ],
+        "purple_cube": [
+          0.1201,
+          0.2606,
+          0.018
+        ]
+      },
+      "collection_note": "Record only after the object is placed on the plate and the task is visibly complete."
+    },
+    {
+      "episode_id": "episode_00061",
+      "task_id": "place_green_ball_on_plate",
+      "instruction": "Put the green ball on the plate.",
+      "target_object": "green_ball",
+      "target_receptacle": "placement_plate",
+      "object_positions": {
+        "green_ball": [
+          0.24,
+          -0.04,
+          0.02
+        ],
+        "red_ball": [
+          0.3593,
+          0.0206,
+          0.02
+        ],
+        "blue_ball": [
+          0.3596,
+          0.1401,
+          0.02
+        ],
+        "orange_cube": [
+          0.3601,
+          0.2007,
+          0.018
+        ],
+        "purple_cube": [
+          0.3601,
+          -0.1597,
+          0.018
+        ]
+      },
+      "collection_note": "Record only after the object is placed on the plate and the task is visibly complete."
+    },
+    {
+      "episode_id": "episode_00062",
+      "task_id": "place_blue_ball_on_plate",
+      "instruction": "Put the blue ball on the plate.",
+      "target_object": "blue_ball",
+      "target_receptacle": "placement_plate",
+      "object_positions": {
+        "blue_ball": [
+          0.24,
+          -0.04,
+          0.02
+        ],
+        "red_ball": [
+          0.3595,
+          0.1398,
+          0.02
+        ],
+        "green_ball": [
+          0.3598,
+          0.2597,
+          0.02
+        ],
+        "orange_cube": [
+          0.1206,
+          0.2599,
+          0.018
+        ],
+        "purple_cube": [
+          0.3595,
+          0.0791,
+          0.018
+        ]
+      },
+      "collection_note": "Record only after the object is placed on the plate and the task is visibly complete."
+    },
+    {
+      "episode_id": "episode_00063",
+      "task_id": "place_orange_cube_on_plate",
+      "instruction": "Pick up the orange cube and place it on the plate.",
+      "target_object": "orange_cube",
+      "target_receptacle": "placement_plate",
+      "object_positions": {
+        "orange_cube": [
+          0.24,
+          -0.04,
+          0.018
+        ],
+        "red_ball": [
+          0.1199,
+          -0.1599,
+          0.02
+        ],
+        "green_ball": [
+          0.3595,
+          0.1993,
+          0.02
+        ],
+        "blue_ball": [
+          0.3604,
+          -0.0399,
+          0.02
+        ],
+        "purple_cube": [
+          0.1192,
+          0.2001,
+          0.018
+        ]
+      },
+      "collection_note": "Record only after the object is placed on the plate and the task is visibly complete."
+    },
+    {
+      "episode_id": "episode_00064",
+      "task_id": "place_purple_cube_on_plate",
+      "instruction": "Pick up the purple cube and place it on the plate.",
+      "target_object": "purple_cube",
+      "target_receptacle": "placement_plate",
+      "object_positions": {
+        "purple_cube": [
+          0.24,
+          -0.04,
+          0.018
+        ],
+        "red_ball": [
+          0.3597,
+          0.2596,
+          0.02
+        ],
+        "green_ball": [
+          0.36,
+          0.0194,
+          0.02
+        ],
+        "blue_ball": [
+          0.3598,
+          0.0796,
+          0.02
+        ],
+        "orange_cube": [
+          0.3605,
+          0.1403,
+          0.018
+        ]
+      },
+      "collection_note": "Record only after the object is placed on the plate and the task is visibly complete."
+    },
+    {
+      "episode_id": "episode_00065",
+      "task_id": "place_red_ball_on_plate",
+      "instruction": "Put the red ball on the plate.",
+      "target_object": "red_ball",
+      "target_receptacle": "placement_plate",
+      "object_positions": {
+        "red_ball": [
+          0.26,
+          -0.04,
+          0.02
+        ],
+        "green_ball": [
+          0.1206,
+          0.1998,
+          0.02
+        ],
+        "blue_ball": [
+          0.1199,
+          -0.1604,
+          0.02
+        ],
+        "orange_cube": [
+          0.36,
+          0.0808,
+          0.018
+        ],
+        "purple_cube": [
+          0.3591,
+          -0.039,
+          0.018
+        ]
+      },
+      "collection_note": "Record only after the object is placed on the plate and the task is visibly complete."
+    },
+    {
+      "episode_id": "episode_00066",
+      "task_id": "place_green_ball_on_plate",
+      "instruction": "Put the green ball on the plate.",
+      "target_object": "green_ball",
+      "target_receptacle": "placement_plate",
+      "object_positions": {
+        "green_ball": [
+          0.26,
+          -0.04,
+          0.02
+        ],
+        "red_ball": [
+          0.3604,
+          -0.0396,
+          0.02
+        ],
+        "blue_ball": [
+          0.1192,
+          0.1994,
+          0.02
+        ],
+        "orange_cube": [
+          0.3604,
+          -0.1606,
+          0.018
+        ],
+        "purple_cube": [
+          0.1206,
+          0.1392,
+          0.018
+        ]
+      },
+      "collection_note": "Record only after the object is placed on the plate and the task is visibly complete."
+    },
+    {
+      "episode_id": "episode_00067",
+      "task_id": "place_blue_ball_on_plate",
+      "instruction": "Put the blue ball on the plate.",
+      "target_object": "blue_ball",
+      "target_receptacle": "placement_plate",
+      "object_positions": {
+        "blue_ball": [
+          0.26,
+          -0.04,
+          0.02
+        ],
+        "red_ball": [
+          0.1191,
+          -0.1596,
+          0.02
+        ],
+        "green_ball": [
+          0.1209,
+          0.2605,
+          0.02
+        ],
+        "orange_cube": [
+          0.3597,
+          -0.1001,
+          0.018
+        ],
+        "purple_cube": [
+          0.359,
+          0.2594,
+          0.018
+        ]
+      },
+      "collection_note": "Record only after the object is placed on the plate and the task is visibly complete."
+    },
+    {
+      "episode_id": "episode_00068",
+      "task_id": "place_orange_cube_on_plate",
+      "instruction": "Pick up the orange cube and place it on the plate.",
+      "target_object": "orange_cube",
+      "target_receptacle": "placement_plate",
+      "object_positions": {
+        "orange_cube": [
+          0.26,
+          -0.04,
+          0.018
+        ],
+        "red_ball": [
+          0.3603,
+          -0.0994,
+          0.02
+        ],
+        "green_ball": [
+          0.3608,
+          -0.0398,
+          0.02
+        ],
+        "blue_ball": [
+          0.3599,
+          -0.1607,
+          0.02
+        ],
+        "purple_cube": [
+          0.1203,
+          -0.16,
+          0.018
+        ]
+      },
+      "collection_note": "Record only after the object is placed on the plate and the task is visibly complete."
+    },
+    {
+      "episode_id": "episode_00069",
+      "task_id": "place_purple_cube_on_plate",
+      "instruction": "Pick up the purple cube and place it on the plate.",
+      "target_object": "purple_cube",
+      "target_receptacle": "placement_plate",
+      "object_positions": {
+        "purple_cube": [
+          0.26,
+          -0.04,
+          0.018
+        ],
+        "red_ball": [
+          0.3606,
+          0.0194,
+          0.02
+        ],
+        "green_ball": [
+          0.3593,
+          -0.0399,
+          0.02
+        ],
+        "blue_ball": [
+          0.3601,
+          0.2005,
+          0.02
+        ],
+        "orange_cube": [
+          0.1194,
+          0.1998,
+          0.018
+        ]
+      },
+      "collection_note": "Record only after the object is placed on the plate and the task is visibly complete."
+    },
+    {
+      "episode_id": "episode_00070",
+      "task_id": "place_red_ball_on_plate",
+      "instruction": "Put the red ball on the plate.",
+      "target_object": "red_ball",
+      "target_receptacle": "placement_plate",
+      "object_positions": {
+        "red_ball": [
+          0.28,
+          -0.04,
+          0.02
+        ],
+        "green_ball": [
+          0.1207,
+          0.2592,
+          0.02
+        ],
+        "blue_ball": [
+          0.1195,
+          0.1407,
+          0.02
+        ],
+        "orange_cube": [
+          0.1801,
+          0.2602,
+          0.018
+        ],
+        "purple_cube": [
+          0.1806,
+          0.2001,
+          0.018
+        ]
+      },
+      "collection_note": "Record only after the object is placed on the plate and the task is visibly complete."
+    },
+    {
+      "episode_id": "episode_00071",
+      "task_id": "place_green_ball_on_plate",
+      "instruction": "Put the green ball on the plate.",
+      "target_object": "green_ball",
+      "target_receptacle": "placement_plate",
+      "object_positions": {
+        "green_ball": [
+          0.28,
+          -0.04,
+          0.02
+        ],
+        "red_ball": [
+          0.1792,
+          0.08,
+          0.02
+        ],
+        "blue_ball": [
+          0.1796,
+          0.1409,
+          0.02
+        ],
+        "orange_cube": [
+          0.1195,
+          0.2004,
+          0.018
+        ],
+        "purple_cube": [
+          0.121,
+          -0.1593,
+          0.018
+        ]
+      },
+      "collection_note": "Record only after the object is placed on the plate and the task is visibly complete."
+    },
+    {
+      "episode_id": "episode_00072",
+      "task_id": "place_blue_ball_on_plate",
+      "instruction": "Put the blue ball on the plate.",
+      "target_object": "blue_ball",
+      "target_receptacle": "placement_plate",
+      "object_positions": {
+        "blue_ball": [
+          0.28,
+          -0.04,
+          0.02
+        ],
+        "red_ball": [
+          0.181,
+          0.0799,
+          0.02
+        ],
+        "green_ball": [
+          0.12,
+          -0.1604,
+          0.02
+        ],
+        "orange_cube": [
+          0.1206,
+          0.2608,
+          0.018
+        ],
+        "purple_cube": [
+          0.179,
+          -0.0391,
+          0.018
+        ]
+      },
+      "collection_note": "Record only after the object is placed on the plate and the task is visibly complete."
+    },
+    {
+      "episode_id": "episode_00073",
+      "task_id": "place_orange_cube_on_plate",
+      "instruction": "Pick up the orange cube and place it on the plate.",
+      "target_object": "orange_cube",
+      "target_receptacle": "placement_plate",
+      "object_positions": {
+        "orange_cube": [
+          0.28,
+          -0.04,
+          0.018
+        ],
+        "red_ball": [
+          0.1804,
+          0.02,
+          0.02
+        ],
+        "green_ball": [
+          0.1792,
+          -0.0393,
+          0.02
+        ],
+        "blue_ball": [
+          0.1192,
+          0.2602,
+          0.02
+        ],
+        "purple_cube": [
+          0.1806,
+          0.1392,
+          0.018
+        ]
+      },
+      "collection_note": "Record only after the object is placed on the plate and the task is visibly complete."
+    },
+    {
+      "episode_id": "episode_00074",
+      "task_id": "place_purple_cube_on_plate",
+      "instruction": "Pick up the purple cube and place it on the plate.",
+      "target_object": "purple_cube",
+      "target_receptacle": "placement_plate",
+      "object_positions": {
+        "purple_cube": [
+          0.28,
+          -0.04,
+          0.018
+        ],
+        "red_ball": [
+          0.1207,
+          0.1992,
+          0.02
+        ],
+        "green_ball": [
+          0.1792,
+          0.0201,
+          0.02
+        ],
+        "blue_ball": [
+          0.1796,
+          0.26,
+          0.02
+        ],
+        "orange_cube": [
+          0.1809,
+          -0.1004,
+          0.018
+        ]
+      },
+      "collection_note": "Record only after the object is placed on the plate and the task is visibly complete."
+    },
+    {
+      "episode_id": "episode_00075",
+      "task_id": "place_red_ball_on_plate",
+      "instruction": "Put the red ball on the plate.",
+      "target_object": "red_ball",
+      "target_receptacle": "placement_plate",
+      "object_positions": {
+        "red_ball": [
+          0.2,
+          -0.12,
+          0.02
+        ],
+        "green_ball": [
+          0.3596,
+          0.1996,
+          0.02
+        ],
+        "blue_ball": [
+          0.299,
+          0.2591,
+          0.02
+        ],
+        "orange_cube": [
+          0.301,
+          -0.0391,
+          0.018
+        ],
+        "purple_cube": [
+          0.2993,
+          0.0207,
+          0.018
+        ]
+      },
+      "collection_note": "Record only after the object is placed on the plate and the task is visibly complete."
+    },
+    {
+      "episode_id": "episode_00076",
+      "task_id": "place_green_ball_on_plate",
+      "instruction": "Put the green ball on the plate.",
+      "target_object": "green_ball",
+      "target_receptacle": "placement_plate",
+      "object_positions": {
+        "green_ball": [
+          0.2,
+          -0.12,
+          0.02
+        ],
+        "red_ball": [
+          0.299,
+          0.08,
+          0.02
+        ],
+        "blue_ball": [
+          0.2997,
+          0.14,
+          0.02
+        ],
+        "orange_cube": [
+          0.36,
+          0.14,
+          0.018
+        ],
+        "purple_cube": [
+          0.3003,
+          -0.0406,
+          0.018
+        ]
+      },
+      "collection_note": "Record only after the object is placed on the plate and the task is visibly complete."
+    },
+    {
+      "episode_id": "episode_00077",
+      "task_id": "place_blue_ball_on_plate",
+      "instruction": "Put the blue ball on the plate.",
+      "target_object": "blue_ball",
+      "target_receptacle": "placement_plate",
+      "object_positions": {
+        "blue_ball": [
+          0.2,
+          -0.12,
+          0.02
+        ],
+        "red_ball": [
+          0.2992,
+          0.1997,
+          0.02
+        ],
+        "green_ball": [
+          0.3591,
+          -0.0401,
+          0.02
+        ],
+        "orange_cube": [
+          0.2996,
+          0.0798,
+          0.018
+        ],
+        "purple_cube": [
+          0.3004,
+          0.1395,
+          0.018
+        ]
+      },
+      "collection_note": "Record only after the object is placed on the plate and the task is visibly complete."
+    },
+    {
+      "episode_id": "episode_00078",
+      "task_id": "place_orange_cube_on_plate",
+      "instruction": "Pick up the orange cube and place it on the plate.",
+      "target_object": "orange_cube",
+      "target_receptacle": "placement_plate",
+      "object_positions": {
+        "orange_cube": [
+          0.2,
+          -0.12,
+          0.018
+        ],
+        "red_ball": [
+          0.3604,
+          -0.1603,
+          0.02
+        ],
+        "green_ball": [
+          0.3601,
+          0.0799,
+          0.02
+        ],
+        "blue_ball": [
+          0.3609,
+          -0.1008,
+          0.02
+        ],
+        "purple_cube": [
+          0.3595,
+          0.1996,
+          0.018
+        ]
+      },
+      "collection_note": "Record only after the object is placed on the plate and the task is visibly complete."
+    },
+    {
+      "episode_id": "episode_00079",
+      "task_id": "place_purple_cube_on_plate",
+      "instruction": "Pick up the purple cube and place it on the plate.",
+      "target_object": "purple_cube",
+      "target_receptacle": "placement_plate",
+      "object_positions": {
+        "purple_cube": [
+          0.2,
+          -0.12,
+          0.018
+        ],
+        "red_ball": [
+          0.2996,
+          -0.0405,
+          0.02
+        ],
+        "green_ball": [
+          0.3598,
+          0.0199,
+          0.02
+        ],
+        "blue_ball": [
+          0.3593,
+          0.199,
+          0.02
+        ],
+        "orange_cube": [
+          0.3597,
+          -0.16,
+          0.018
+        ]
+      },
+      "collection_note": "Record only after the object is placed on the plate and the task is visibly complete."
+    },
+    {
+      "episode_id": "episode_00080",
+      "task_id": "place_red_ball_on_plate",
+      "instruction": "Put the red ball on the plate.",
+      "target_object": "red_ball",
+      "target_receptacle": "placement_plate",
+      "object_positions": {
+        "red_ball": [
+          0.22,
+          -0.12,
+          0.02
+        ],
+        "green_ball": [
+          0.3591,
+          0.2596,
+          0.02
+        ],
+        "blue_ball": [
+          0.3596,
+          0.0208,
+          0.02
+        ],
+        "orange_cube": [
+          0.3598,
+          0.2001,
+          0.018
+        ],
+        "purple_cube": [
+          0.1197,
+          0.1391,
+          0.018
+        ]
+      },
+      "collection_note": "Record only after the object is placed on the plate and the task is visibly complete."
+    },
+    {
+      "episode_id": "episode_00081",
+      "task_id": "place_green_ball_on_plate",
+      "instruction": "Put the green ball on the plate.",
+      "target_object": "green_ball",
+      "target_receptacle": "placement_plate",
+      "object_positions": {
+        "green_ball": [
+          0.22,
+          -0.12,
+          0.02
+        ],
+        "red_ball": [
+          0.1191,
+          0.2602,
+          0.02
+        ],
+        "blue_ball": [
+          0.3605,
+          0.2609,
+          0.02
+        ],
+        "orange_cube": [
+          0.3606,
+          0.2005,
+          0.018
+        ],
+        "purple_cube": [
+          0.12,
+          -0.1594,
+          0.018
+        ]
+      },
+      "collection_note": "Record only after the object is placed on the plate and the task is visibly complete."
+    },
+    {
+      "episode_id": "episode_00082",
+      "task_id": "place_blue_ball_on_plate",
+      "instruction": "Put the blue ball on the plate.",
+      "target_object": "blue_ball",
+      "target_receptacle": "placement_plate",
+      "object_positions": {
+        "blue_ball": [
+          0.22,
+          -0.12,
+          0.02
+        ],
+        "red_ball": [
+          0.3597,
+          0.1394,
+          0.02
+        ],
+        "green_ball": [
+          0.3602,
+          -0.041,
+          0.02
+        ],
+        "orange_cube": [
+          0.3601,
+          -0.1606,
+          0.018
+        ],
+        "purple_cube": [
+          0.36,
+          0.0197,
+          0.018
+        ]
+      },
+      "collection_note": "Record only after the object is placed on the plate and the task is visibly complete."
+    },
+    {
+      "episode_id": "episode_00083",
+      "task_id": "place_orange_cube_on_plate",
+      "instruction": "Pick up the orange cube and place it on the plate.",
+      "target_object": "orange_cube",
+      "target_receptacle": "placement_plate",
+      "object_positions": {
+        "orange_cube": [
+          0.22,
+          -0.12,
+          0.018
+        ],
+        "red_ball": [
+          0.3601,
+          0.2007,
+          0.02
+        ],
+        "green_ball": [
+          0.3603,
+          -0.0394,
+          0.02
+        ],
+        "blue_ball": [
+          0.1196,
+          -0.159,
+          0.02
+        ],
+        "purple_cube": [
+          0.3601,
+          -0.1592,
+          0.018
+        ]
+      },
+      "collection_note": "Record only after the object is placed on the plate and the task is visibly complete."
+    },
+    {
+      "episode_id": "episode_00084",
+      "task_id": "place_purple_cube_on_plate",
+      "instruction": "Pick up the purple cube and place it on the plate.",
+      "target_object": "purple_cube",
+      "target_receptacle": "placement_plate",
+      "object_positions": {
+        "purple_cube": [
+          0.22,
+          -0.12,
+          0.018
+        ],
+        "red_ball": [
+          0.3595,
+          -0.1605,
+          0.02
+        ],
+        "green_ball": [
+          0.1208,
+          0.1392,
+          0.02
+        ],
+        "blue_ball": [
+          0.3591,
+          -0.1005,
+          0.02
+        ],
+        "orange_cube": [
+          0.36,
+          0.1398,
+          0.018
+        ]
+      },
+      "collection_note": "Record only after the object is placed on the plate and the task is visibly complete."
+    },
+    {
+      "episode_id": "episode_00085",
+      "task_id": "place_red_ball_on_plate",
+      "instruction": "Put the red ball on the plate.",
+      "target_object": "red_ball",
+      "target_receptacle": "placement_plate",
+      "object_positions": {
+        "red_ball": [
+          0.24,
+          -0.12,
+          0.02
+        ],
+        "green_ball": [
+          0.3592,
+          0.0794,
+          0.02
+        ],
+        "blue_ball": [
+          0.36,
+          -0.1009,
+          0.02
+        ],
+        "orange_cube": [
+          0.3602,
+          -0.1598,
+          0.018
+        ],
+        "purple_cube": [
+          0.3595,
+          0.2596,
+          0.018
+        ]
+      },
+      "collection_note": "Record only after the object is placed on the plate and the task is visibly complete."
+    },
+    {
+      "episode_id": "episode_00086",
+      "task_id": "place_green_ball_on_plate",
+      "instruction": "Put the green ball on the plate.",
+      "target_object": "green_ball",
+      "target_receptacle": "placement_plate",
+      "object_positions": {
+        "green_ball": [
+          0.24,
+          -0.12,
+          0.02
+        ],
+        "red_ball": [
+          0.1191,
+          0.1993,
+          0.02
+        ],
+        "blue_ball": [
+          0.3608,
+          0.0797,
+          0.02
+        ],
+        "orange_cube": [
+          0.3601,
+          0.0194,
+          0.018
+        ],
+        "purple_cube": [
+          0.1196,
+          -0.1597,
+          0.018
+        ]
+      },
+      "collection_note": "Record only after the object is placed on the plate and the task is visibly complete."
+    },
+    {
+      "episode_id": "episode_00087",
+      "task_id": "place_blue_ball_on_plate",
+      "instruction": "Put the blue ball on the plate.",
+      "target_object": "blue_ball",
+      "target_receptacle": "placement_plate",
+      "object_positions": {
+        "blue_ball": [
+          0.24,
+          -0.12,
+          0.02
+        ],
+        "red_ball": [
+          0.1198,
+          0.1401,
+          0.02
+        ],
+        "green_ball": [
+          0.3604,
+          0.0202,
+          0.02
+        ],
+        "orange_cube": [
+          0.3593,
+          0.141,
+          0.018
+        ],
+        "purple_cube": [
+          0.3593,
+          0.2598,
+          0.018
+        ]
+      },
+      "collection_note": "Record only after the object is placed on the plate and the task is visibly complete."
+    },
+    {
+      "episode_id": "episode_00088",
+      "task_id": "place_orange_cube_on_plate",
+      "instruction": "Pick up the orange cube and place it on the plate.",
+      "target_object": "orange_cube",
+      "target_receptacle": "placement_plate",
+      "object_positions": {
+        "orange_cube": [
+          0.24,
+          -0.12,
+          0.018
+        ],
+        "red_ball": [
+          0.3601,
+          -0.0998,
+          0.02
+        ],
+        "green_ball": [
+          0.3592,
+          0.0206,
+          0.02
+        ],
+        "blue_ball": [
+          0.12,
+          0.1408,
+          0.02
+        ],
+        "purple_cube": [
+          0.3595,
+          0.2003,
+          0.018
+        ]
+      },
+      "collection_note": "Record only after the object is placed on the plate and the task is visibly complete."
+    },
+    {
+      "episode_id": "episode_00089",
+      "task_id": "place_purple_cube_on_plate",
+      "instruction": "Pick up the purple cube and place it on the plate.",
+      "target_object": "purple_cube",
+      "target_receptacle": "placement_plate",
+      "object_positions": {
+        "purple_cube": [
+          0.24,
+          -0.12,
+          0.018
+        ],
+        "red_ball": [
+          0.3605,
+          0.2005,
+          0.02
+        ],
+        "green_ball": [
+          0.12,
+          0.2604,
+          0.02
+        ],
+        "blue_ball": [
+          0.1208,
+          -0.1592,
+          0.02
+        ],
+        "orange_cube": [
+          0.3595,
+          0.0198,
+          0.018
+        ]
+      },
+      "collection_note": "Record only after the object is placed on the plate and the task is visibly complete."
+    },
+    {
+      "episode_id": "episode_00090",
+      "task_id": "place_red_ball_on_plate",
+      "instruction": "Put the red ball on the plate.",
+      "target_object": "red_ball",
+      "target_receptacle": "placement_plate",
+      "object_positions": {
+        "red_ball": [
+          0.26,
+          -0.12,
+          0.02
+        ],
+        "green_ball": [
+          0.3599,
+          0.0209,
+          0.02
+        ],
+        "blue_ball": [
+          0.3595,
+          0.2007,
+          0.02
+        ],
+        "orange_cube": [
+          0.3592,
+          0.2591,
+          0.018
+        ],
+        "purple_cube": [
+          0.3599,
+          -0.1602,
+          0.018
+        ]
+      },
+      "collection_note": "Record only after the object is placed on the plate and the task is visibly complete."
+    },
+    {
+      "episode_id": "episode_00091",
+      "task_id": "place_green_ball_on_plate",
+      "instruction": "Put the green ball on the plate.",
+      "target_object": "green_ball",
+      "target_receptacle": "placement_plate",
+      "object_positions": {
+        "green_ball": [
+          0.26,
+          -0.12,
+          0.02
+        ],
+        "red_ball": [
+          0.1209,
+          0.1404,
+          0.02
+        ],
+        "blue_ball": [
+          0.3604,
+          -0.0404,
+          0.02
+        ],
+        "orange_cube": [
+          0.3608,
+          0.0207,
+          0.018
+        ],
+        "purple_cube": [
+          0.1199,
+          0.1993,
+          0.018
+        ]
+      },
+      "collection_note": "Record only after the object is placed on the plate and the task is visibly complete."
+    },
+    {
+      "episode_id": "episode_00092",
+      "task_id": "place_blue_ball_on_plate",
+      "instruction": "Put the blue ball on the plate.",
+      "target_object": "blue_ball",
+      "target_receptacle": "placement_plate",
+      "object_positions": {
+        "blue_ball": [
+          0.26,
+          -0.12,
+          0.02
+        ],
+        "red_ball": [
+          0.3591,
+          0.2004,
+          0.02
+        ],
+        "green_ball": [
+          0.3603,
+          -0.0396,
+          0.02
+        ],
+        "orange_cube": [
+          0.3598,
+          0.1398,
+          0.018
+        ],
+        "purple_cube": [
+          0.1203,
+          -0.1593,
+          0.018
+        ]
+      },
+      "collection_note": "Record only after the object is placed on the plate and the task is visibly complete."
+    },
+    {
+      "episode_id": "episode_00093",
+      "task_id": "place_orange_cube_on_plate",
+      "instruction": "Pick up the orange cube and place it on the plate.",
+      "target_object": "orange_cube",
+      "target_receptacle": "placement_plate",
+      "object_positions": {
+        "orange_cube": [
+          0.26,
+          -0.12,
+          0.018
+        ],
+        "red_ball": [
+          0.1208,
+          0.2009,
+          0.02
+        ],
+        "green_ball": [
+          0.1208,
+          0.2603,
+          0.02
+        ],
+        "blue_ball": [
+          0.3603,
+          0.1402,
+          0.02
+        ],
+        "purple_cube": [
+          0.3602,
+          0.0199,
+          0.018
+        ]
+      },
+      "collection_note": "Record only after the object is placed on the plate and the task is visibly complete."
+    },
+    {
+      "episode_id": "episode_00094",
+      "task_id": "place_purple_cube_on_plate",
+      "instruction": "Pick up the purple cube and place it on the plate.",
+      "target_object": "purple_cube",
+      "target_receptacle": "placement_plate",
+      "object_positions": {
+        "purple_cube": [
+          0.26,
+          -0.12,
+          0.018
+        ],
+        "red_ball": [
+          0.3599,
+          0.1999,
+          0.02
+        ],
+        "green_ball": [
+          0.1207,
+          0.1994,
+          0.02
+        ],
+        "blue_ball": [
+          0.36,
+          0.259,
+          0.02
+        ],
+        "orange_cube": [
+          0.3602,
+          0.0193,
+          0.018
+        ]
+      },
+      "collection_note": "Record only after the object is placed on the plate and the task is visibly complete."
+    },
+    {
+      "episode_id": "episode_00095",
+      "task_id": "place_red_ball_on_plate",
+      "instruction": "Put the red ball on the plate.",
+      "target_object": "red_ball",
+      "target_receptacle": "placement_plate",
+      "object_positions": {
+        "red_ball": [
+          0.28,
+          -0.12,
+          0.02
+        ],
+        "green_ball": [
+          0.1797,
+          0.1394,
+          0.02
+        ],
+        "blue_ball": [
+          0.1802,
+          -0.0403,
+          0.02
+        ],
+        "orange_cube": [
+          0.1204,
+          0.1397,
+          0.018
+        ],
+        "purple_cube": [
+          0.1796,
+          -0.0995,
+          0.018
+        ]
+      },
+      "collection_note": "Record only after the object is placed on the plate and the task is visibly complete."
+    },
+    {
+      "episode_id": "episode_00096",
+      "task_id": "place_green_ball_on_plate",
+      "instruction": "Put the green ball on the plate.",
+      "target_object": "green_ball",
+      "target_receptacle": "placement_plate",
+      "object_positions": {
+        "green_ball": [
+          0.28,
+          -0.12,
+          0.02
+        ],
+        "red_ball": [
+          0.1792,
+          0.08,
+          0.02
+        ],
+        "blue_ball": [
+          0.1795,
+          -0.0996,
+          0.02
+        ],
+        "orange_cube": [
+          0.1205,
+          -0.1598,
+          0.018
+        ],
+        "purple_cube": [
+          0.1794,
+          -0.0396,
+          0.018
+        ]
+      },
+      "collection_note": "Record only after the object is placed on the plate and the task is visibly complete."
+    },
+    {
+      "episode_id": "episode_00097",
+      "task_id": "place_blue_ball_on_plate",
+      "instruction": "Put the blue ball on the plate.",
+      "target_object": "blue_ball",
+      "target_receptacle": "placement_plate",
+      "object_positions": {
+        "blue_ball": [
+          0.28,
+          -0.12,
+          0.02
+        ],
+        "red_ball": [
+          0.1209,
+          0.1997,
+          0.02
+        ],
+        "green_ball": [
+          0.1804,
+          0.0192,
+          0.02
+        ],
+        "orange_cube": [
+          0.119,
+          0.2603,
+          0.018
+        ],
+        "purple_cube": [
+          0.1793,
+          0.2591,
+          0.018
+        ]
+      },
+      "collection_note": "Record only after the object is placed on the plate and the task is visibly complete."
+    },
+    {
+      "episode_id": "episode_00098",
+      "task_id": "place_orange_cube_on_plate",
+      "instruction": "Pick up the orange cube and place it on the plate.",
+      "target_object": "orange_cube",
+      "target_receptacle": "placement_plate",
+      "object_positions": {
+        "orange_cube": [
+          0.28,
+          -0.12,
+          0.018
+        ],
+        "red_ball": [
+          0.18,
+          0.2601,
+          0.02
+        ],
+        "green_ball": [
+          0.1793,
+          0.0805,
+          0.02
+        ],
+        "blue_ball": [
+          0.1197,
+          0.2592,
+          0.02
+        ],
+        "purple_cube": [
+          0.1792,
+          0.2008,
+          0.018
+        ]
+      },
+      "collection_note": "Record only after the object is placed on the plate and the task is visibly complete."
+    },
+    {
+      "episode_id": "episode_00099",
+      "task_id": "place_purple_cube_on_plate",
+      "instruction": "Pick up the purple cube and place it on the plate.",
+      "target_object": "purple_cube",
+      "target_receptacle": "placement_plate",
+      "object_positions": {
+        "purple_cube": [
+          0.28,
+          -0.12,
+          0.018
+        ],
+        "red_ball": [
+          0.1803,
+          0.1403,
+          0.02
+        ],
+        "green_ball": [
+          0.1808,
+          0.2602,
+          0.02
+        ],
+        "blue_ball": [
+          0.1191,
+          0.1403,
+          0.02
+        ],
+        "orange_cube": [
+          0.1809,
+          -0.0993,
+          0.018
+        ]
+      },
+      "collection_note": "Record only after the object is placed on the plate and the task is visibly complete."
+    }
+  ]
+}

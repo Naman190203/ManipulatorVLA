@@ -39,7 +39,7 @@ JOINT_ORDER = (
     "joint_3",
     "joint_4",
     "joint_5",
-    "left_gear_joint",
+    "gripper_motor_joint",
 )
 ACTUATOR_ORDER = (
     "joint1_position",

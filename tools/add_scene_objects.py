@@ -12,7 +12,9 @@ import mujoco
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 ASSETS_DIR = PROJECT_ROOT / "assets"
 ROBOT_FILE = ASSETS_DIR / "urdf_configuration.xml"
-OUTPUT_FILE = ASSETS_DIR / "scene_with_balls_cameras.xml"
+# Keep this legacy URDF-derived preview separate from the active calibrated
+# scene, which contains the parallel gripper, workspace objects, and camera rig.
+OUTPUT_FILE = ASSETS_DIR / "scene_from_urdf_preview.xml"
 
 BALL_POSITIONS = {
     "red_ball":   (0.22, -0.10, 0.045),
@@ -30,12 +32,9 @@ AGENT_CAMERA_XYAXES = (
 )
 AGENT_CAMERA_FOVY = 68
 
-# The eye-in-hand view is behind the palm, facing forward along the local
-# finger axis (+X).  This gives the LIBERO wrist-view perspective while keeping
-# both fingers at the bottom and sides of the image for grasp feedback.
-GRIPPER_CAMERA_POS = (-0.065, 0.0, 0.040)
-GRIPPER_CAMERA_XYAXES = (0.0, 1.0, 0.0, 0.0, 0.0, -1.0)
-GRIPPER_CAMERA_FOVY = 80
+TOP_CAMERA_POS = (0.12, 0.02, 1.35)
+TOP_CAMERA_XYAXES = (1.0, 0.0, 0.0, 0.0, 1.0, 0.0)
+TOP_CAMERA_FOVY = 52
 
 
 def main():
@@ -94,14 +93,11 @@ def main():
         fovy=AGENT_CAMERA_FOVY,
     )
 
-    gripper_body = spec.body("gripper_base")
-    if gripper_body is None:
-        raise RuntimeError("Could not find body 'gripper_base' for gripperview.")
-    gripper_body.add_camera(
-        name="gripperview",
-        pos=GRIPPER_CAMERA_POS,
-        xyaxes=GRIPPER_CAMERA_XYAXES,
-        fovy=GRIPPER_CAMERA_FOVY,
+    spec.worldbody.add_camera(
+        name="topview",
+        pos=TOP_CAMERA_POS,
+        xyaxes=TOP_CAMERA_XYAXES,
+        fovy=TOP_CAMERA_FOVY,
     )
 
     OUTPUT_FILE.write_text(spec.to_xml(), encoding="utf-8")

@@ -16,6 +16,7 @@ import hashlib
 from io import BytesIO
 import json
 from pathlib import Path
+import shutil
 import time
 from typing import Any
 
@@ -25,7 +26,7 @@ from PIL import Image
 import websockets
 
 
-CAMERAS = ("agentview", "gripperview")
+CAMERAS = ("agentview", "topview")
 
 
 async def authenticate(websocket: Any, token: str | None) -> None:
@@ -44,6 +45,12 @@ def save_frame(
     video_writers: dict[str, Any],
 ) -> list[float]:
     images = observation["images"]
+    missing_cameras = [camera for camera in CAMERAS if camera not in images]
+    if missing_cameras:
+        raise RuntimeError(
+            f"Bridge observation is missing camera(s) {missing_cameras}; "
+            f"available cameras are {sorted(images)}. Restart the bridge with the current scene."
+        )
     for camera in CAMERAS:
         encoded = images[camera]["data_base64"]
         with Image.open(BytesIO(base64.b64decode(encoded))) as image:
@@ -59,7 +66,7 @@ def save_frame(
         "sim_time": observation["sim_time"],
         "video_frame_index": frame_index,
         "agentview_video": "agentview.mp4",
-        "gripperview_video": "gripperview.mp4",
+        "topview_video": "topview.mp4",
         "camera_timestamps": {camera: images[camera]["timestamp"] for camera in CAMERAS},
         "camera_resolution": {camera: [images[camera]["width"], images[camera]["height"]] for camera in CAMERAS},
         "joint_position_rad": state["joint_position_rad"],
@@ -86,12 +93,24 @@ async def record_episode(
 
     episode_dir = root / "episodes" / task["episode_id"]
     if episode_dir.exists():
-        raise FileExistsError(f"Refusing to overwrite existing {episode_dir}.")
+        existing_metadata_path = episode_dir / "episode.json"
+        if not existing_metadata_path.is_file():
+            raise FileExistsError(f"Refusing to reuse episode directory without metadata: {episode_dir}")
+        existing_metadata = json.loads(existing_metadata_path.read_text(encoding="utf-8"))
+        if "success" in existing_metadata:
+            raise FileExistsError(f"Refusing to overwrite completed episode {episode_dir}.")
+        backup_dir = episode_dir.with_name(f"{episode_dir.name}.incomplete_{int(time.time())}")
+        if backup_dir.exists():
+            raise FileExistsError(f"Cannot preserve incomplete episode; backup already exists: {backup_dir}")
+        shutil.move(str(episode_dir), str(backup_dir))
+        print(f"Preserved incomplete prior recording at {backup_dir}")
     episode_dir.mkdir(parents=True)
     (episode_dir / "episode.json").write_text(json.dumps({
         **task,
-        "schema_version": 1,
-        "joint_order": ["joint_1", "joint_2", "joint_3", "joint_4", "joint_5", "left_gear_joint"],
+        "schema_version": 2,
+        "joint_order": ["joint_1", "joint_2", "joint_3", "joint_4", "joint_5", "gripper_motor_joint"],
+        "gripper_mechanism": "single_revolute_motor_driving_parallel_translating_fingers",
+        "action_representation": "absolute_joint_target_rad",
         "camera_names": list(CAMERAS),
         "camera_video_fps": video_fps,
         "started_at_unix": time.time(),
@@ -130,16 +149,23 @@ async def record_episode(
 
 async def main_async(args: argparse.Namespace) -> None:
     suite = json.loads(args.tasks.read_text(encoding="utf-8"))
+    expected_joint_order = ["joint_1", "joint_2", "joint_3", "joint_4", "joint_5", "gripper_motor_joint"]
+    if suite.get("schema_version") != 2 or suite.get("joint_order") != expected_joint_order:
+        raise ValueError("Task suite joint_order does not match the current revolute-motor gripper scene.")
+    if suite.get("action_representation") != "absolute_joint_target_rad":
+        raise ValueError("Task suite action representation must be absolute_joint_target_rad.")
     root = args.output.resolve()
     root.mkdir(parents=True, exist_ok=True)
     scene_path = Path(suite["scene"])
     scene_sha256 = hashlib.sha256(scene_path.read_bytes()).hexdigest() if scene_path.is_file() else None
     (root / "dataset_info.json").write_text(json.dumps({
-        "schema_version": 1,
+        "schema_version": 2,
         "source_task_suite": str(args.tasks.resolve()),
         "scene": suite["scene"],
         "scene_sha256": scene_sha256,
-        "camera_names": suite["camera_names"],
+        "camera_names": list(CAMERAS),
+        "joint_order": expected_joint_order,
+        "gripper_mechanism": "single_revolute_motor_driving_parallel_translating_fingers",
         "action_representation": suite["action_representation"],
     }, indent=2) + "\n", encoding="utf-8")
     base = args.bridge.rstrip("/").replace("http://", "ws://").replace("https://", "wss://")
