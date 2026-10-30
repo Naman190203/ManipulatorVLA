@@ -1,5 +1,5 @@
 {
-  "schema_version": 2,
+  "schema_version": 4,
   "seed": 44,
   "scene": "assets/scene_with_balls_cameras.xml",
   "camera_names": [
@@ -15,7 +15,13 @@
     "joint_5",
     "gripper_motor_joint"
   ],
-  "gripper_mechanism": "single_revolute_motor_driving_parallel_translating_fingers",
+  "gripper_model": "Images/metal_2dof_gripper.urdf",
+  "gripper_scale": 0.8,
+  "gripper_mechanism": "single_actuated_revolute_joint_with_mirrored_revolute_jaws",
+  "gripper_motor_limits_rad": [
+    -0.41,
+    0.0
+  ],
   "episodes": [
     {
       "episode_id": "episode_00000",

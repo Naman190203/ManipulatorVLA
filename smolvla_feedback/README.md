@@ -23,7 +23,7 @@ The adapter sends one JSON object to `POST /predict` for each simulator observat
 }
 ```
 
-The six state values, action names, and camera names match this project's LeRobot exporter (`observation.state`, `observation.images.agentview`, `observation.images.topview`). The gripper actuator is a revolute motor joint; its linkage translates both parallel fingers. The extra `simulator` object in the request is adapter context and is **not** a model feature. The real policy server decodes the JPEGs, calls LeRobot's inference preprocessing and postprocessing pipelines, then returns a postprocessed action:
+The six state values, action names, and camera names match this project's LeRobot exporter (`observation.state`, `observation.images.agentview`, `observation.images.topview`). The gripper actuator is one revolute motor joint; an equality constraint mirrors the other revolute jaw. Its allowed range is `[-0.41, 0.0]` radians. The extra `simulator` object in the request is adapter context and is **not** a model feature. The real policy server decodes the JPEGs, calls LeRobot's inference preprocessing and postprocessing pipelines, then returns a postprocessed action:
 
 ```json
 {

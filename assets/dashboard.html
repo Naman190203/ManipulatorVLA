@@ -107,7 +107,7 @@
         <option value="2">Joint 3 · elbow</option>
         <option value="3">Joint 4 · wrist pitch</option>
         <option value="4">Joint 5 · wrist rotation</option>
-        <option value="5">Gripper motor · revolute open / close</option>
+        <option value="5">Gripper motor · mirrored revolute jaws</option>
       </select>
 
       <div class="row">
@@ -134,7 +134,7 @@
         <button class="arrow right" data-direction="1" title="Increase (Arrow Right)">→</button>
       </div>
       <button class="hold" id="holdButton">Hold current measured pose</button>
-      <p class="hint">Use ↑ or → to increase the selected joint, and ↓ or ← to decrease it. Hold an arrow for repeated small steps. The simulator clamps commands to each joint’s configured limits and moves toward each target gradually.</p>
+      <p class="hint">Use ↑ or → to increase the selected joint, and ↓ or ← to decrease it. For the gripper, 0° is open and −23.5° is the configured close limit, where the fingertip collision pads meet. Hold an arrow for repeated small steps. The simulator clamps commands to each joint’s configured limits and moves toward each target gradually.</p>
 
       <details class="token-wrap">
         <summary>Connection token (only needed when authentication is enabled)</summary>

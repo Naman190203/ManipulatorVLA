@@ -26,8 +26,9 @@ The dashboard is served at `http://127.0.0.1:8765/`. For dataset collection,
 see [docs/VLA_DATASET.md](docs/VLA_DATASET.md). For bridge details, see
 [docs/BRIDGE.md](docs/BRIDGE.md).
 
-The gripper uses one revolute motor to move two parallel fingers through a
-gear/linkage constraint. Run `python tools/preview_parallel_gripper.py` to
-watch its open/close motion, or select the gripper motor in the dashboard.
+The gripper uses the geometry from `Images/metal_2dof_gripper.urdf`, scaled
+to 0.80×, with one actuated revolute joint and a mirrored revolute jaw. Its
+motor range is −0.41 to 0 rad. Run `python tools/preview_parallel_gripper.py`
+to watch its open/close motion, or select the gripper motor in the dashboard.
 See [docs/GRIPPER_MODEL.md](docs/GRIPPER_MODEL.md) for its joint mapping and
 the arm settling changes.

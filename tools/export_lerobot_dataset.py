@@ -78,12 +78,12 @@ def main() -> None:
         metadata, frames = read_episode(episode_dir)
         if not metadata.get("instruction"):
             raise ValueError(f"Missing language instruction: {episode_dir}")
-        if metadata.get("schema_version") != 2:
-            raise ValueError(f"Episode is not in the current gripper dataset schema: {episode_dir}")
+        if metadata.get("schema_version") != 4:
+            raise ValueError(f"Episode is not in the URDF-gripper dataset schema: {episode_dir}")
         if metadata.get("action_representation") != ACTION_REPRESENTATION:
             raise ValueError(f"Episode uses an old or unsupported action representation: {episode_dir}")
         if metadata.get("joint_order") != list(JOINT_ORDER):
-            raise ValueError(f"Episode joint order does not match the revolute motor gripper: {episode_dir}")
+            raise ValueError(f"Episode joint order does not match the URDF-derived gripper: {episode_dir}")
         successful_dirs.append((episode_dir, metadata, frames))
     if not successful_dirs:
         parser.error("No successful episodes found in the raw dataset")

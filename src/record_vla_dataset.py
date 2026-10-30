@@ -107,9 +107,12 @@ async def record_episode(
     episode_dir.mkdir(parents=True)
     (episode_dir / "episode.json").write_text(json.dumps({
         **task,
-        "schema_version": 2,
+        "schema_version": 4,
         "joint_order": ["joint_1", "joint_2", "joint_3", "joint_4", "joint_5", "gripper_motor_joint"],
-        "gripper_mechanism": "single_revolute_motor_driving_parallel_translating_fingers",
+        "gripper_model": "Images/metal_2dof_gripper.urdf",
+        "gripper_scale": 0.8,
+        "gripper_mechanism": "single_actuated_revolute_joint_with_mirrored_revolute_jaws",
+        "gripper_motor_limits_rad": [-0.41, 0.0],
         "action_representation": "absolute_joint_target_rad",
         "camera_names": list(CAMERAS),
         "camera_video_fps": video_fps,
@@ -150,8 +153,10 @@ async def record_episode(
 async def main_async(args: argparse.Namespace) -> None:
     suite = json.loads(args.tasks.read_text(encoding="utf-8"))
     expected_joint_order = ["joint_1", "joint_2", "joint_3", "joint_4", "joint_5", "gripper_motor_joint"]
-    if suite.get("schema_version") != 2 or suite.get("joint_order") != expected_joint_order:
-        raise ValueError("Task suite joint_order does not match the current revolute-motor gripper scene.")
+    if suite.get("schema_version") != 4 or suite.get("joint_order") != expected_joint_order:
+        raise ValueError("Task suite schema/joint_order does not match the URDF-derived gripper scene.")
+    if suite.get("gripper_mechanism") != "single_actuated_revolute_joint_with_mirrored_revolute_jaws":
+        raise ValueError("Task suite does not describe the active URDF-derived gripper.")
     if suite.get("action_representation") != "absolute_joint_target_rad":
         raise ValueError("Task suite action representation must be absolute_joint_target_rad.")
     root = args.output.resolve()
@@ -159,13 +164,16 @@ async def main_async(args: argparse.Namespace) -> None:
     scene_path = Path(suite["scene"])
     scene_sha256 = hashlib.sha256(scene_path.read_bytes()).hexdigest() if scene_path.is_file() else None
     (root / "dataset_info.json").write_text(json.dumps({
-        "schema_version": 2,
+        "schema_version": 4,
         "source_task_suite": str(args.tasks.resolve()),
         "scene": suite["scene"],
         "scene_sha256": scene_sha256,
         "camera_names": list(CAMERAS),
         "joint_order": expected_joint_order,
-        "gripper_mechanism": "single_revolute_motor_driving_parallel_translating_fingers",
+        "gripper_model": "Images/metal_2dof_gripper.urdf",
+        "gripper_scale": 0.8,
+        "gripper_mechanism": "single_actuated_revolute_joint_with_mirrored_revolute_jaws",
+        "gripper_motor_limits_rad": [-0.41, 0.0],
         "action_representation": suite["action_representation"],
     }, indent=2) + "\n", encoding="utf-8")
     base = args.bridge.rstrip("/").replace("http://", "ws://").replace("https://", "wss://")

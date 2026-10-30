@@ -49,8 +49,9 @@ range and target slew rate.
 Feedback JSON contains `sim_time`, `timestamp_unix`, six revolute joint
 positions in radians and velocities in radians/second, current commanded
 targets, and both camera frames as base64-encoded JPEG images. The gripper's
-revolute motor drives two linked slider fingers that move in parallel. Decode
-each image from
+single commanded revolute motor drives two mirrored revolute jaws through an
+equality constraint. Negative motor angles close the jaws; zero opens them.
+Decode each image from
 `images.agentview.data_base64` or `images.topview.data_base64`.
 
 Commands must contain exactly six target positions in this order:
@@ -76,15 +77,18 @@ These are absolute position targets, in the order `joint_1`, `joint_2`,
 
 Joint 3 and 4 zero positions remain aligned with their preceding links. Joint
 3 bends positive and joint 4 bends negative, per the specified opposite
-directions. The gripper motor interval is `[-0.48, 0.0]` radians; `0.0` is
-open and negative values close it, moving the fingers together while they
-remain parallel. Each allowed interval is enforced both by
+directions. The gripper motor interval is `[-0.41, 0.0]` radians; `0.0` is
+open and negative values close the jaws. Each allowed interval is enforced both by
 the joint limit and the motor position actuator. Out-of-range values are
 rejected. Arm targets are slewed at no more than 0.75 rad/s and the gripper at
 1 rad/s; these are command slew limits, not measured guarantees of physical
 joint speed. The arm joints add reflected armature and passive damping to the
 1.3-ratio position servos. The implicit-fast integrator helps the joints settle
 at requested positions.
+
+The default wrist-roll position is `joint_5 = 3.141592654` rad (180°). The
+simulator and episode resets restore that pose, and the dashboard readout
+starts at 180°.
 Commands must have a strictly increasing `seq` on each connection. If
 commands stop for 12 seconds, the bridge eases to a hold at the measured pose.
 

@@ -4,7 +4,7 @@ python -m pip install -r requirements-bridge.txt
 # Open the simulator
 python src/sim_bridge.py 
 
-# Open an automatic open/close motion of the parallel-finger gripper
+# Open an automatic open/close motion of the URDF gripper
 python tools/preview_parallel_gripper.py
 
 # Create 100 randomized tasks using seed 42:

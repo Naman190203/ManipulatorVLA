@@ -114,13 +114,16 @@ def main() -> None:
 
     rng = random.Random(args.seed)
     suite = {
-        "schema_version": 2,
+        "schema_version": 4,
         "seed": args.seed,
         "scene": "assets/scene_with_balls_cameras.xml",
         "camera_names": ["agentview", "topview"],
         "action_representation": "absolute_joint_target_rad",
         "joint_order": ["joint_1", "joint_2", "joint_3", "joint_4", "joint_5", "gripper_motor_joint"],
-        "gripper_mechanism": "single_revolute_motor_driving_parallel_translating_fingers",
+        "gripper_model": "Images/metal_2dof_gripper.urdf",
+        "gripper_scale": 0.8,
+        "gripper_mechanism": "single_actuated_revolute_joint_with_mirrored_revolute_jaws",
+        "gripper_motor_limits_rad": [-0.41, 0.0],
         "episodes": [make_episode(rng, index) for index in range(args.episodes)],
     }
     args.output.write_text(json.dumps(suite, indent=2) + "\n", encoding="utf-8")

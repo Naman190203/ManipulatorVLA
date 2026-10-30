@@ -1,4 +1,4 @@
-"""Open the active manipulator scene and animate its revolute gripper motor."""
+"""Open the active manipulator scene and animate its URDF-derived gripper motor."""
 
 from __future__ import annotations
 
@@ -26,8 +26,8 @@ def main() -> None:
     mujoco.mj_forward(model, data)
     actuator_id = mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_ACTUATOR, "gripper_open_close")
     if actuator_id < 0:
-        raise RuntimeError("Prototype scene has no gripper_open_close actuator")
-    open_target, closed_target = 0.0, -0.48
+        raise RuntimeError("Active scene has no gripper_open_close actuator")
+    open_target, closed_target = 0.0, -0.41
     start = time.perf_counter()
     with mujoco.viewer.launch_passive(model, data) as viewer:
         grasp_site = mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_SITE, "grasp_site")

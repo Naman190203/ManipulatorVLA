@@ -1,0 +1,419 @@
+<?xml version='1.0' encoding='utf-8'?>
+<robot name="photo_inspired_2dof_gripper">
+  <material name="aluminium">
+    <color rgba="0.72 0.75 0.78 1" />
+  </material>
+  <material name="steel">
+    <color rgba="0.42 0.45 0.48 1" />
+  </material>
+  <material name="dark_steel">
+    <color rgba="0.18 0.20 0.22 1" />
+  </material>
+  <material name="bright_steel">
+    <color rgba="0.88 0.89 0.90 1" />
+  </material>
+  <link name="gripper_base">
+    <inertial>
+      <origin xyz="0 0 0" />
+      <mass value="0.045000" />
+      <inertia ixx="0.00004000" ixy="0" ixz="0" iyy="0.00005000" iyz="0" izz="0.00004000" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" />
+      <geometry>
+        <box size="0.070 0.105 0.010" />
+      </geometry>
+      <material name="aluminium" />
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" />
+      <geometry>
+        <box size="0.070 0.105 0.010" />
+      </geometry>
+    </collision>
+    <visual>
+      <origin xyz="0 -0.043 -0.025" />
+      <geometry>
+        <box size="0.055 0.045 0.040" />
+      </geometry>
+      <material name="dark_steel" />
+    </visual>
+    <visual>
+      <origin xyz="0 -0.004 0.008" />
+      <geometry>
+        <cylinder radius="0.018" length="0.012" />
+      </geometry>
+      <material name="steel" />
+    </visual>
+    <visual>
+      <origin xyz="0 -0.004 0.015" />
+      <geometry>
+        <cylinder radius="0.006" length="0.003" />
+      </geometry>
+      <material name="bright_steel" />
+    </visual>
+    <visual>
+      <origin xyz="-0.023 -0.04 0.006" />
+      <geometry>
+        <cylinder radius="0.0035" length="0.002" />
+      </geometry>
+      <material name="dark_steel" />
+    </visual>
+    <visual>
+      <origin xyz="-0.023 0.035 0.006" />
+      <geometry>
+        <cylinder radius="0.0035" length="0.002" />
+      </geometry>
+      <material name="dark_steel" />
+    </visual>
+    <visual>
+      <origin xyz="0.023 -0.04 0.006" />
+      <geometry>
+        <cylinder radius="0.0035" length="0.002" />
+      </geometry>
+      <material name="dark_steel" />
+    </visual>
+    <visual>
+      <origin xyz="0.023 0.035 0.006" />
+      <geometry>
+        <cylinder radius="0.0035" length="0.002" />
+      </geometry>
+      <material name="dark_steel" />
+    </visual>
+  </link>
+  <link name="left_moving_jaw">
+    <inertial>
+      <origin xyz="0 0 0" />
+      <mass value="0.028000" />
+      <inertia ixx="0.00003000" ixy="0" ixz="0" iyy="0.00004000" iyz="0" izz="0.00003000" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" />
+      <geometry>
+        <cylinder radius="0.030" length="0.008" />
+      </geometry>
+      <material name="aluminium" />
+    </visual>
+    <visual>
+      <origin xyz="0 0 0.005" />
+      <geometry>
+        <cylinder radius="0.011" length="0.003" />
+      </geometry>
+      <material name="bright_steel" />
+    </visual>
+    <visual>
+      <origin xyz="0 0 0.007" />
+      <geometry>
+        <cylinder radius="0.0045" length="0.002" />
+      </geometry>
+      <material name="dark_steel" />
+    </visual>
+    <visual>
+      <origin xyz="0.01026 -0.02819 0.001" rpy="0 0 -1.22173" />
+      <geometry>
+        <box size="0.008 0.0045 0.007" />
+      </geometry>
+      <material name="bright_steel" />
+    </visual>
+    <visual>
+      <origin xyz="0.01805 -0.02396 0.001" rpy="0 0 -0.92502" />
+      <geometry>
+        <box size="0.008 0.0045 0.007" />
+      </geometry>
+      <material name="bright_steel" />
+    </visual>
+    <visual>
+      <origin xyz="0.02427 -0.01763 0.001" rpy="0 0 -0.62832" />
+      <geometry>
+        <box size="0.008 0.0045 0.007" />
+      </geometry>
+      <material name="bright_steel" />
+    </visual>
+    <visual>
+      <origin xyz="0.02837 -0.00977 0.001" rpy="0 0 -0.33161" />
+      <geometry>
+        <box size="0.008 0.0045 0.007" />
+      </geometry>
+      <material name="bright_steel" />
+    </visual>
+    <visual>
+      <origin xyz="0.02998 -0.00105 0.001" rpy="0 0 -0.03491" />
+      <geometry>
+        <box size="0.008 0.0045 0.007" />
+      </geometry>
+      <material name="bright_steel" />
+    </visual>
+    <visual>
+      <origin xyz="0.02898 0.00776 0.001" rpy="0 0 0.26180" />
+      <geometry>
+        <box size="0.008 0.0045 0.007" />
+      </geometry>
+      <material name="bright_steel" />
+    </visual>
+    <visual>
+      <origin xyz="0.02544 0.01590 0.001" rpy="0 0 0.55851" />
+      <geometry>
+        <box size="0.008 0.0045 0.007" />
+      </geometry>
+      <material name="bright_steel" />
+    </visual>
+    <visual>
+      <origin xyz="0.01968 0.02264 0.001" rpy="0 0 0.85521" />
+      <geometry>
+        <box size="0.008 0.0045 0.007" />
+      </geometry>
+      <material name="bright_steel" />
+    </visual>
+    <visual>
+      <origin xyz="0.01220 0.02741 0.001" rpy="0 0 1.15192" />
+      <geometry>
+        <box size="0.008 0.0045 0.007" />
+      </geometry>
+      <material name="bright_steel" />
+    </visual>
+    <visual>
+      <origin xyz="-0.02500 0.025 0.000" rpy="0 0 -0.48869" />
+      <geometry>
+        <box size="0.060 0.014 0.007" />
+      </geometry>
+      <material name="aluminium" />
+    </visual>
+    <visual>
+      <origin xyz="-0.04700 0.080 0.000" rpy="0 0 -0.13963" />
+      <geometry>
+        <box size="0.019 0.095 0.008" />
+      </geometry>
+      <material name="aluminium" />
+    </visual>
+    <visual>
+      <origin xyz="-0.04900 0.139 0.000" rpy="0 0 -0.13963" />
+      <geometry>
+        <box size="0.023 0.035 0.009" />
+      </geometry>
+      <material name="aluminium" />
+    </visual>
+    <visual>
+      <origin xyz="-0.05000 0.157 0.001" />
+      <geometry>
+        <cylinder radius="0.011" length="0.009" />
+      </geometry>
+      <material name="bright_steel" />
+    </visual>
+    <visual>
+      <origin xyz="-0.05000 0.157 0.006" />
+      <geometry>
+        <box size="0.014 0.020 0.003" />
+      </geometry>
+      <material name="dark_steel" />
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" />
+      <geometry>
+        <cylinder radius="0.030" length="0.008" />
+      </geometry>
+    </collision>
+    <collision>
+      <origin xyz="-0.04700 0.080 0" rpy="0 0 -0.13963" />
+      <geometry>
+        <box size="0.019 0.095 0.008" />
+      </geometry>
+    </collision>
+    <visual>
+      <origin xyz="-0.036000 0.052500 0.009" rpy="0 0 1.951303" />
+      <geometry>
+        <box size="0.059237 0.007 0.004" />
+      </geometry>
+      <material name="aluminium" />
+    </visual>
+    <visual>
+      <origin xyz="-0.025000 0.025000 0.011" />
+      <geometry>
+        <cylinder radius="0.0065" length="0.004" />
+      </geometry>
+      <material name="bright_steel" />
+    </visual>
+    <visual>
+      <origin xyz="-0.047000 0.080000 0.011" />
+      <geometry>
+        <cylinder radius="0.0065" length="0.004" />
+      </geometry>
+      <material name="bright_steel" />
+    </visual>
+  </link>
+  <link name="right_moving_jaw">
+    <inertial>
+      <origin xyz="0 0 0" />
+      <mass value="0.028000" />
+      <inertia ixx="0.00003000" ixy="0" ixz="0" iyy="0.00004000" iyz="0" izz="0.00003000" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" />
+      <geometry>
+        <cylinder radius="0.030" length="0.008" />
+      </geometry>
+      <material name="aluminium" />
+    </visual>
+    <visual>
+      <origin xyz="0 0 0.005" />
+      <geometry>
+        <cylinder radius="0.011" length="0.003" />
+      </geometry>
+      <material name="bright_steel" />
+    </visual>
+    <visual>
+      <origin xyz="0 0 0.007" />
+      <geometry>
+        <cylinder radius="0.0045" length="0.002" />
+      </geometry>
+      <material name="dark_steel" />
+    </visual>
+    <visual>
+      <origin xyz="-0.01026 0.02819 0.001" rpy="0 0 1.91986" />
+      <geometry>
+        <box size="0.008 0.0045 0.007" />
+      </geometry>
+      <material name="bright_steel" />
+    </visual>
+    <visual>
+      <origin xyz="-0.01805 0.02396 0.001" rpy="0 0 2.21657" />
+      <geometry>
+        <box size="0.008 0.0045 0.007" />
+      </geometry>
+      <material name="bright_steel" />
+    </visual>
+    <visual>
+      <origin xyz="-0.02427 0.01763 0.001" rpy="0 0 2.51327" />
+      <geometry>
+        <box size="0.008 0.0045 0.007" />
+      </geometry>
+      <material name="bright_steel" />
+    </visual>
+    <visual>
+      <origin xyz="-0.02837 0.00977 0.001" rpy="0 0 2.80998" />
+      <geometry>
+        <box size="0.008 0.0045 0.007" />
+      </geometry>
+      <material name="bright_steel" />
+    </visual>
+    <visual>
+      <origin xyz="-0.02998 0.00105 0.001" rpy="0 0 3.10669" />
+      <geometry>
+        <box size="0.008 0.0045 0.007" />
+      </geometry>
+      <material name="bright_steel" />
+    </visual>
+    <visual>
+      <origin xyz="-0.02898 -0.00776 0.001" rpy="0 0 3.40339" />
+      <geometry>
+        <box size="0.008 0.0045 0.007" />
+      </geometry>
+      <material name="bright_steel" />
+    </visual>
+    <visual>
+      <origin xyz="-0.02544 -0.01590 0.001" rpy="0 0 3.70010" />
+      <geometry>
+        <box size="0.008 0.0045 0.007" />
+      </geometry>
+      <material name="bright_steel" />
+    </visual>
+    <visual>
+      <origin xyz="-0.01968 -0.02264 0.001" rpy="0 0 3.99680" />
+      <geometry>
+        <box size="0.008 0.0045 0.007" />
+      </geometry>
+      <material name="bright_steel" />
+    </visual>
+    <visual>
+      <origin xyz="-0.01220 -0.02741 0.001" rpy="0 0 4.29351" />
+      <geometry>
+        <box size="0.008 0.0045 0.007" />
+      </geometry>
+      <material name="bright_steel" />
+    </visual>
+    <visual>
+      <origin xyz="0.02500 0.025 0.000" rpy="0 0 0.48869" />
+      <geometry>
+        <box size="0.060 0.014 0.007" />
+      </geometry>
+      <material name="aluminium" />
+    </visual>
+    <visual>
+      <origin xyz="0.04700 0.080 0.000" rpy="0 0 0.13963" />
+      <geometry>
+        <box size="0.019 0.095 0.008" />
+      </geometry>
+      <material name="aluminium" />
+    </visual>
+    <visual>
+      <origin xyz="0.04900 0.139 0.000" rpy="0 0 0.13963" />
+      <geometry>
+        <box size="0.023 0.035 0.009" />
+      </geometry>
+      <material name="aluminium" />
+    </visual>
+    <visual>
+      <origin xyz="0.05000 0.157 0.001" />
+      <geometry>
+        <cylinder radius="0.011" length="0.009" />
+      </geometry>
+      <material name="bright_steel" />
+    </visual>
+    <visual>
+      <origin xyz="0.05000 0.157 0.006" />
+      <geometry>
+        <box size="0.014 0.020 0.003" />
+      </geometry>
+      <material name="dark_steel" />
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" />
+      <geometry>
+        <cylinder radius="0.030" length="0.008" />
+      </geometry>
+    </collision>
+    <collision>
+      <origin xyz="0.04700 0.080 0" rpy="0 0 0.13963" />
+      <geometry>
+        <box size="0.019 0.095 0.008" />
+      </geometry>
+    </collision>
+    <visual>
+      <origin xyz="0.036000 0.052500 0.009" rpy="0 0 1.190290" />
+      <geometry>
+        <box size="0.059237 0.007 0.004" />
+      </geometry>
+      <material name="aluminium" />
+    </visual>
+    <visual>
+      <origin xyz="0.025000 0.025000 0.011" />
+      <geometry>
+        <cylinder radius="0.0065" length="0.004" />
+      </geometry>
+      <material name="bright_steel" />
+    </visual>
+    <visual>
+      <origin xyz="0.047000 0.080000 0.011" />
+      <geometry>
+        <cylinder radius="0.0065" length="0.004" />
+      </geometry>
+      <material name="bright_steel" />
+    </visual>
+  </link>
+  <joint name="left_gear_joint" type="revolute">
+    <parent link="gripper_base" />
+    <child link="left_moving_jaw" />
+    <origin xyz="-0.027 0.000 0.010" />
+    <axis xyz="0 0 1" />
+    <limit lower="-0.55" upper="0.55" effort="2.0" velocity="2.0" />
+    <dynamics damping="0.08" friction="0.01" />
+  </joint>
+  <joint name="right_gear_joint" type="revolute">
+    <parent link="gripper_base" />
+    <child link="right_moving_jaw" />
+    <origin xyz="0.027 0.000 0.010" />
+    <axis xyz="0 0 1" />
+    <limit lower="-0.55" upper="0.55" effort="2.0" velocity="2.0" />
+    <dynamics damping="0.08" friction="0.01" />
+    <mimic joint="left_gear_joint" multiplier="-1.0" offset="0" />
+  </joint>
+</robot>

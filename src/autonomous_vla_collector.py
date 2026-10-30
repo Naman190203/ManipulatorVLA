@@ -30,8 +30,8 @@ ARM_JOINTS = ("joint_1", "joint_2", "joint_3", "joint_4", "joint_5")
 ACTUATORS = ("joint1_position", "joint2_position", "joint3_position", "joint4_position", "joint5_position", "gripper_open_close")
 GRIPPER_JOINT = "gripper_motor_joint"
 GRIPPER_OPEN_RAD = 0.0
-GRIPPER_CLOSE_RAD = {"red_ball": -0.18, "green_ball": -0.18, "blue_ball": -0.18,
-                     "orange_cube": -0.21, "purple_cube": -0.21}
+GRIPPER_CLOSE_RAD = {"red_ball": -0.25, "green_ball": -0.25, "blue_ball": -0.25,
+                     "orange_cube": -0.27, "purple_cube": -0.27}
 JOINT_ORDER = (*ARM_JOINTS, GRIPPER_JOINT)
 OBJECT_JOINTS = {name: f"{name}_free" for name in ("red_ball", "green_ball", "blue_ball", "orange_cube", "purple_cube")}
 OBJECT_HALF_HEIGHT = {"red_ball": 0.020, "green_ball": 0.020, "blue_ball": 0.020,
@@ -77,7 +77,7 @@ class AutonomousCollector:
         self.object_robot_pair_margins = {}
         robot_body_names = (
             "link_1", "link_2", "link_3", "link_4", "link_5",
-            "gripper_base", "left_finger", "right_finger",
+            "urdf_gripper_base", "urdf_left_moving_jaw", "urdf_right_moving_jaw",
         )
         robot_body_ids = {
             mujoco.mj_name2id(self.model, mujoco.mjtObj.mjOBJ_BODY, name)
@@ -355,10 +355,13 @@ class AutonomousCollector:
         self.reset()
         target_address = self.object_qpos[target_name]
         target = self.data.qpos[target_address:target_address + 3].copy()
-        metadata = {**self.task, "schema_version": 2, "controller": "damped_least_squares_ik",
+        metadata = {**self.task, "schema_version": 4, "controller": "damped_least_squares_ik",
                     "grasp_mode": self.grasp_mode,
                     "joint_order": list(JOINT_ORDER),
-                    "gripper_mechanism": "single_revolute_motor_driving_parallel_translating_fingers",
+                    "gripper_model": "Images/metal_2dof_gripper.urdf",
+                    "gripper_scale": 0.8,
+                    "gripper_mechanism": "single_actuated_revolute_joint_with_mirrored_revolute_jaws",
+                    "gripper_motor_limits_rad": [-0.41, 0.0],
                     "action_representation": "absolute_joint_target_rad", "camera_video_fps": self.fps,
                     "started_at_unix": time.time()}
         (episode_dir / "episode.json").write_text(json.dumps(metadata, indent=2) + "\n", encoding="utf-8")
@@ -454,8 +457,10 @@ def main() -> None:
         parser.error("--fps and --limit must be positive, and --start cannot be negative.")
     if args.tasks:
         suite = json.loads(args.tasks.read_text(encoding="utf-8"))
-        if suite.get("schema_version") != 2 or suite.get("joint_order") != list(JOINT_ORDER):
-            parser.error("Task suite joint_order does not match the current revolute-motor gripper scene.")
+        if suite.get("schema_version") != 4 or suite.get("joint_order") != list(JOINT_ORDER):
+            parser.error("Task suite schema/joint_order does not match the URDF-derived gripper scene.")
+        if suite.get("gripper_mechanism") != "single_actuated_revolute_joint_with_mirrored_revolute_jaws":
+            parser.error("Task suite does not describe the active URDF-derived gripper.")
         if suite.get("action_representation") != "absolute_joint_target_rad":
             parser.error("Task suite action representation must be absolute_joint_target_rad.")
         tasks = suite["episodes"][args.start:args.start + args.limit]

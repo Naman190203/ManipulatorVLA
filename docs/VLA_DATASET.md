@@ -15,8 +15,8 @@ Every successful training sample needs:
 - The action actually commanded at that frame. This bridge records absolute
   joint targets and also stores a frame-to-frame delta for model conversion.
 - Six revolute coordinates in the fixed order `joint_1`, `joint_2`, `joint_3`,
-  `joint_4`, `joint_5`, `gripper_motor_joint`. The gripper motor angle closes
-  both linked fingers while they translate in parallel.
+  `joint_4`, `joint_5`, `gripper_motor_joint`. The final coordinate is the
+  gripper motor angle; its mirrored revolute jaw is an internal constraint.
 - Initial poses for every movable object, a reproducible random seed, scene
   name, camera names, and joint order.
 - A terminal success label. Failed or interrupted demonstrations should be
@@ -34,8 +34,9 @@ python src/create_task_suite.py --episodes 100 --seed 42 --output dataset_tasks.
 ```
 
 The generator balances five plate-placement instructions and samples collision-
-spaced positions for all movable balls and cubes. The shallow plate stays fixed
-because it is a static part of the current scene.
+spaced positions for all movable balls and cubes. New manifests use schema 4
+and identify the URDF-derived gripper. The shallow plate stays fixed because it
+is a static part of the current scene.
 
 ## Record demonstrations
 
